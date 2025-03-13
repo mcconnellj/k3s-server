@@ -30,4 +30,4 @@ echo "export dry='--dry-run=client'" >> $rc
 echo "export o='-oyaml'" >> $rc
 
 # Install k3s and configure it to use the persistent disk for data storage
-curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--data-dir /mnt/disks/k3s" sh -
+curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--data-dir /mnt/disks
