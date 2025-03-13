@@ -1,3 +1,42 @@
+// Env vars
+// ----------------------------------
+
+variable "env" {
+  type        = string
+  default     = "dev"
+  description = "Environment"
+}
+
+variable "region" {
+  type        = string
+  default     = "us-central1"
+  description = "GCP Region"
+}
+
+variable "zone" {
+  type        = string
+  default     = "us-central1-a"
+  description = "GCP Zone"
+}
+
+variable "app_name" {
+  type        = string
+  default     = "app name"
+  description = "Application name"
+}
+
+variable "project_name" {
+  type        = string
+  default     = "k3s-server"
+  description = "GCP Project name"
+}
+
+variable "bucket_name" {
+  type        = string
+  default     = "k3s-bucket"
+  description = "Bucket name"
+}
+
 // Compute
 // ----------------------------------
 
@@ -46,7 +85,7 @@ resource "google_compute_instance" "k3s" {
     sensitive = "false"
   }
 
-  metadata_startup_script   = file("scripts/k3s-vm-startup.sh")
+  metadata_startup_script   = file("scripts/k3s-startup.sh")
   allow_stopping_for_update = true
 }
 
@@ -97,7 +136,7 @@ resource "google_storage_bucket" "k3s-storage" {
 
 // The Artifact Registry repository for our app
 resource "google_artifact_registry_repository" "app-repo" {
-  location      = "us-east1"
+  location      = "us-central1"
   repository_id = "app-repo"
   description   = "App Docker repository"
   format        = "DOCKER"
@@ -107,51 +146,12 @@ resource "google_artifact_registry_repository" "app-repo" {
   }
 }
 
-// Env vars
-// ----------------------------------
-
-variable "env" {
-  type        = string
-  default     = "dev"
-  description = "Environment"
-}
-
-variable "region" {
-  type        = string
-  default     = "us-east1"
-  description = "GCP Region"
-}
-
-variable "zone" {
-  type        = string
-  default     = "us-east1-a"
-  description = "GCP Zone"
-}
-
-variable "app_name" {
-  type        = string
-  default     = "<name-of-your-cluster>"
-  description = "Application name"
-}
-
-variable "project_name" {
-  type        = string
-  default     = "<name-of-your-gcp-project>"
-  description = "GCP Project name"
-}
-
-variable "bucket_name" {
-  type        = string
-  default     = "<name-of-your-bucket>"
-  description = "Bucket name"
-}
-
 // Provider
 // ----------------------------------
 
 // Connect to the GCP project
 provider "google" {
-  credentials = file("<my-gcp-creds>.json")
+  credentials = file("<gcp-creds.json")
   project     = var.project_name
   region      = var.region
   zone        = var.zone
@@ -160,7 +160,7 @@ provider "google" {
 terraform {
   # Use a shared bucket (wich allows collaborative work)
   backend "gcs" {
-    bucket      = "<my-bucket-for-states>"
+    bucket      = "k3s-shared-bucket"
     prefix      = "k3s-infra"
   }
 
