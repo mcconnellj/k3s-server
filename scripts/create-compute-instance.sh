@@ -5,23 +5,25 @@
 # Load environment variables from the .env file if needed
 source .env
 
+#!/bin/bash
+
+# Load environment variables from .env file
+export $(cat .env | xargs)
+
 # Create the VM with dynamic variables
-gcloud compute instances create k3s-cloud-tunnel-$(date +"%Y%m%d-%H%M%S") \
-  --project="$GCP_PROJECT" \
-  --zone="$ZONE" \
-  --machine-type="$MACHINE_TYPE" \
-  --network-interface=network-tier=STANDARD,stack-type=IPV4_ONLY,subnet=default \
-  --maintenance-policy=TERMINATE \
-  --provisioning-model=SPOT \
-  --service-account="$SERVICE_ACCOUNT" \
-  --scopes="$GCP_SCOPES" \
-  --tags=http-server,https-server \
-  --create-disk=auto-delete=yes,boot=yes,device-name=k3s-cloud-tunnel,image="$DISK_IMAGE",mode=rw,size="$DISK_SIZE",type="$DISK_TYPE" \
-  --no-shielded-secure-boot \
-  --shielded-vtpm \
-  --shielded-integrity-monitoring \
-  --labels="$LABELS" \
-  --reservation-affinity=any \
-  --metadata=startup-script-url="$STARTUP_SCRIPT_URL",ssh-keys="josh_v_mcconnell:$SSH_KEY" \
-  --automatic-restart=false \
-  --local-ssd-recovery-timeout=0
+gcloud compute instances create $INSTANCE_NAME \
+    --project=$GCP_PROJECT \
+    --zone=$GCP_ZONE \
+    --machine-type=$MACHINE_TYPE \
+    --network-interface=network-tier=$NETWORK_TIER,stack-type=IPV4_ONLY,subnet=$SUBNET \
+    --maintenance-policy=MIGRATE \
+    --provisioning-model=STANDARD \
+    --service-account=$SERVICE_ACCOUNT \
+    --scopes=$SCOPES \
+    --create-disk=auto-delete=yes,boot=yes,device-name=$INSTANCE_NAME,disk-resource-policy=projects/$GCP_PROJECT/regions/us-central1/resourcePolicies/default-schedule-1,image=$DISK_IMAGE,mode=rw,size=$DISK_SIZE,type=$DISK_TYPE \
+    --no-shielded-secure-boot \
+    --shielded-vtpm \
+    --shielded-integrity-monitoring \
+    --labels=$LABELS \
+    --reservation-affinity=any \
+    $(if [ "$PREEMPTIBLE" = true ]; then echo "--preemptible"; fi)
