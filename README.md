@@ -1,3 +1,6 @@
+curl -fsSL https://raw.githubusercontent.com/mcconnellj/k3s-server/scripts/install-k3s.sh | sh -
+
+
 # Free Cloud Development Server
 
 [![License](https://img.shields.io/badge/license-MIT-blue)](https://github.com/mcconnellj/cloud-server/blob/main/LICENSE)  
@@ -191,3 +194,5 @@ Special thanks to:
 ---
 
 ## 🎉 Happy Hosting!
+Notes
+- install curl -y

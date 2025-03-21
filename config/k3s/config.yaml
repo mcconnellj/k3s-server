@@ -1,0 +1,15 @@
+# Lightweight single-node config for cloud deployment
+write-kubeconfig-mode: "0644"
+#disable:
+#  - traefik              # Disable built-in ingress controller
+#  - servicelb            # Disable built-in load balancer
+#flannel-backend: "none"  # Disable flannel (no overlay networking)
+disable-network-policy: true
+kube-apiserver-arg:
+  - "anonymous-auth=true" # Allow unauthenticated health/liveness checks (optional)
+kubelet-arg:
+  - "cloud-provider=external" # Prevent default cloud integrations
+token: "REPLACE_ME_WITH_SECURE_TOKEN"
+node-name: "cloud-node"
+tls-san:
+  - "your.public.ip.or.dns"  # Replace with actual public IP or DNS if needed

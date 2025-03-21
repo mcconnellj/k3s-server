@@ -24,26 +24,6 @@
 provider "null" {}
 
 # =====================================================================
-# Host Configuration:
-# This section defines the list of hosts, each with an IP address and a 
-# boolean flag (`is_server`) indicating whether the host is a server or a worker.
-# =====================================================================
-variable "hosts" {
-  type = map(object({
-    ip        = string
-    is_server = bool
-  }))
-  default = {
-    wyse1 = { ip = "192.168.4.21", is_server = false }
-    wyse2 = { ip = "192.168.4.22", is_server = false }
-    wyse3 = { ip = "192.168.4.23", is_server = false }
-    wyse4 = { ip = "192.168.4.24", is_server = true }
-    wyse5 = { ip = "192.168.4.25", is_server = true }
-    omen  = { ip = "192.168.4.26", is_server = false }
-  }
-}
-
-# =====================================================================
 # K3s Install Commands:
 # This section defines the two installation commands that will be used:
 # - One command for servers to join the K3s cluster and set up the server components.
