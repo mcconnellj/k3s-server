@@ -12,6 +12,7 @@ gcloud compute instances create $INSTANCE_NAME \
     --machine-type=$MACHINE_TYPE \
     --network-interface=network-tier=$NETWORK_TIER,stack-type=IPV4_ONLY,subnet=$SUBNET \
     --maintenance-policy=TERMINATE \
+    --instance-termination-action=DELETE \
     --provisioning-model=SPOT \
     --service-account=$SERVICE_ACCOUNT \
     --scopes=$SCOPES \
