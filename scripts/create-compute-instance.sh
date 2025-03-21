@@ -11,7 +11,7 @@ gcloud compute instances create k3s-cloud-tunnel-$(date +"%Y%m%d-%H%M%S") \
     --zone="$ZONE" \
     --machine-type="$MACHINE_TYPE" \
     --network-interface=network-tier=STANDARD,stack-type=IPV4_ONLY,subnet=default \
-    --maintenance-policy=MIGRATE \
+    --maintenance-policy=TERMINATE \   # Fix here: Maintenance policy should be TERMINATE for preemptible instances
     --provisioning-model=SPOT \
     --service-account="$SERVICE_ACCOUNT" \
     --scopes="$GCP_SCOPES" \
@@ -29,4 +29,3 @@ printf 'agentsRule:\n  packageState: installed\n  version: latest\ninstanceFilte
 gcloud compute instances ops-agents policies create goog-ops-agent-v2-x86-template-1-4-0-us-central1-a \
     --project="$GCP_PROJECT" \
     --resource-policies=projects/"$GCP_PROJECT"/regions/us-central1/resourcePolicies/"$SNAPSHOT_POLICY"
-
