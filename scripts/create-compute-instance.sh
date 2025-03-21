@@ -12,7 +12,7 @@ gcloud compute instances create $INSTANCE_NAME \
     --machine-type=$MACHINE_TYPE \
     --network-interface=network-tier=$NETWORK_TIER,stack-type=IPV4_ONLY,subnet=$SUBNET \
     --maintenance-policy=MIGRATE \
-    --provisioning-model=STANDARD \
+    --provisioning-model=SPOT \
     --service-account=$SERVICE_ACCOUNT \
     --scopes=$SCOPES \
     --create-disk=auto-delete=yes,boot=yes,device-name=$INSTANCE_NAME,disk-resource-policy=projects/$GCP_PROJECT/regions/us-central1/resourcePolicies/default-schedule-1,image=$DISK_IMAGE,mode=rw,size=$DISK_SIZE,type=$DISK_TYPE \
