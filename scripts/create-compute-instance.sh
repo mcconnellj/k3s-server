@@ -26,12 +26,11 @@ gcloud compute instances create k3s-cloud-tunnel-$(date +"%Y%m%d-%H%M%S") \
   --on-host-maintenance=TERMINATE \
   --automatic-restart=false \
   --local-ssd-recovery-timeout=0 \
-  --host-error-timeout-seconds=330
+  --host-error-timeout-seconds=300  # Fixed to 300 seconds as per the gcloud documentation
 
 # Create ops-agent policy configuration
 printf 'agentsRule:\n  packageState: installed\n  version: latest\ninstanceFilter:\n  inclusionLabels:\n  - labels:\n      goog-ops-agent-policy: v2-x86-template-1-4-0\n' > config.yaml
 
-# Apply ops-agent policy
+# Apply ops-agent policy without the --resource-policies argument
 gcloud compute instances ops-agents policies create goog-ops-agent-v2-x86-template-1-4-0-us-central1-a \
-  --project="$GCP_PROJECT" \
-  --resource-policies=projects/"$GCP_PROJECT"/regions/us-central1/resourcePolicies/"$SNAPSHOT_POLICY"
+  --project="$GCP_PROJECT"
