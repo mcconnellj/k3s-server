@@ -11,7 +11,7 @@ gcloud compute instances create $INSTANCE_NAME \
     --zone=$GCP_ZONE \
     --machine-type=$MACHINE_TYPE \
     --network-interface=network-tier=$NETWORK_TIER,stack-type=IPV4_ONLY,subnet=$SUBNET \
-    --maintenance-policy=MIGRATE \
+    --maintenance-policy=TERMINATE \
     --provisioning-model=SPOT \
     --service-account=$SERVICE_ACCOUNT \
     --scopes=$SCOPES \
