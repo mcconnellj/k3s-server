@@ -5,11 +5,6 @@
 # Load environment variables from the .env file if needed
 source .env
 
-#!/bin/bash
-
-# Load environment variables from .env file
-export $(cat .env | xargs)
-
 # Create the VM with dynamic variables
 gcloud compute instances create $INSTANCE_NAME \
     --project=$GCP_PROJECT \
