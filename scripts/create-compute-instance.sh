@@ -21,4 +21,4 @@ gcloud compute instances create $INSTANCE_NAME \
     --shielded-integrity-monitoring \
     --labels=$LABELS \
     --reservation-affinity=any \
-    $(if [ "$PREEMPTIBLE" = true ]; then echo "--preemptible"; fi)
+    --preemptible
