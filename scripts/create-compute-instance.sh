@@ -23,6 +23,11 @@ gcloud compute instances create k3s-cloud-tunnel-$(date +"%Y%m%d-%H%M%S") \
   --labels="$LABELS" \
   --reservation-affinity=any \
   --metadata=startup-script-url="$STARTUP_SCRIPT_URL",ssh-keys="josh_v_mcconnell:$SSH_KEY" \
+  --on-host-maintenance=TERMINATE \  # Set onHostMaintenance to TERMINATE for preemptible VMs
+  --automatic-restart=false \        # Disable automatic restart for preemptible VMs
+  --local-ssd-recovery-timeout=0 \   # Set local SSD recovery timeout to 0 (does not wait)
+  --host-error-timeout-seconds=330  # Wait for 330 seconds before considering the VM unresponsive
+
 && \
 # Create ops-agent policy configuration
 printf 'agentsRule:\n  packageState: installed\n  version: latest\ninstanceFilter:\n  inclusionLabels:\n  - labels:\n      goog-ops-agent-policy: v2-x86-template-1-4-0\n' > config.yaml \
