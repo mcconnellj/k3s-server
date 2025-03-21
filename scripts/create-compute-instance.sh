@@ -26,7 +26,7 @@ gcloud compute instances create k3s-cloud-tunnel-$(date +"%Y%m%d-%H%M%S") \
   --on-host-maintenance=TERMINATE \
   --automatic-restart=false \
   --local-ssd-recovery-timeout=0 \
-  --host-error-timeout-seconds=300  # Fixed to 300 seconds as per the gcloud documentation
+  --host-error-timeout-seconds=299  # Fixed to 300 seconds as per the gcloud documentation
 
 # Create ops-agent policy configuration
 printf 'agentsRule:\n  packageState: installed\n  version: latest\ninstanceFilter:\n  inclusionLabels:\n  - labels:\n      goog-ops-agent-policy: v2-x86-template-1-4-0\n' > config.yaml
