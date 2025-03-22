@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha
+kind: ApplicationSet
+metadata:
+  name: example-appset
+  namespace: argocd
+spec:
+  generators:
+  - git:
+      repoURL: https://gitlab.com/abcxyz/example-project/argocd.git
+      revision: main
+      files:
+      - path: "applications/cloud/"
+  template:
+    metadata:
+      name: '{{name}}'
+    spec:
+      project: '{{project}}'
+      source:
+        chart: helm-chart-name
+        repoURL: https://<packaged helm chart url>
+        targetRevision: 2.0
+        helm:
+          values: |-
+            {{values}} # see "values" snippet below 
+      destination:
+        name: staging-cluster
+        namespace: '{{namespace}}'
+      
+      syncPolicy:
+        automated:
+          prune: true
+        syncOptions:
+          - CreateNamespace=true

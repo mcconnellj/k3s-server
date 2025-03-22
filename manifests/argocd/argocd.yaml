@@ -1,3 +1,8 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: argocd
+---
 apiVersion: helm.cattle.io/v1
 kind: HelmChart
 metadata:
@@ -7,4 +12,4 @@ spec:
   repo: https://argoproj.github.io/argo-helm
   chart: argo-cd
   targetNamespace: argocd
-  valuesFile: ./values.yaml
+  valuesFile: 'https://raw.githubusercontent.com/mcconnellj/k3s-server/manivests/argocd/values.yaml'

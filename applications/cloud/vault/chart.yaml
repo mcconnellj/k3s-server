@@ -1,0 +1,20 @@
+# This section is for the Argo CD Application resource
+
+name: vault
+project: cloud-server # Argo CD project
+namespace: production # Ensures namespace in destination cluster exists. 
+
+
+# This section contains the values for the helm chart
+values: |-
+  fullnameOverride: app1-staging
+  image:
+    repository: 1234567890.dkr.ecr.us-west-1.amazonaws.com/app1:latest
+  namespace: staging
+  containerPort: 7080
+  autoscaling:
+    enabled: false
+  ingress:
+    host: app1.staging.com
+  env:
+    enabled: false
