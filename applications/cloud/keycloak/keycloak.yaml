@@ -1,0 +1,11 @@
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: keycloak
+  namespace: kube-system
+spec:
+  repo: https://codecentric.github.io/helm-charts
+  chart: keycloak
+  targetNamespace: argocd
+  version: 24.4.13
+  valuesFile: 'https://raw.githubusercontent.com/mcconnellj/k3s-server/manifests/keycloak/values.yaml'

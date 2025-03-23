@@ -1,0 +1,11 @@
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: n8n
+  namespace: kube-system
+spec:
+  repo: https://charts.n8n.io
+  chart: n8n
+  targetNamespace: argocd
+  version: 0.150.0
+  valuesFile: 'https://raw.githubusercontent.com/mcconnellj/k3s-server/manifests/n8n/values.yaml'
