@@ -9,3 +9,6 @@ curl -o /var/lib/rancher/k3s/server/manifests/argocd.yaml https://raw.githubuser
 ##curl -o /var/lib/rancher/k3s/server/manifests/phase-one-applicationset.yaml https://raw.githubusercontent.com/mcconnellj/k3s-server/main/manifests/phase-one-applicationset.yaml
 
 curl -sfL https://get.k3s.io | sh -
+curl -sS https://webinstall.dev/k9s | bash
+source ~/.config/envman/PATH.env
+
