@@ -16,6 +16,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: argocd-server
+            name: metrics-server-7bf7d58749-d9lht
             port:
               number: 80
