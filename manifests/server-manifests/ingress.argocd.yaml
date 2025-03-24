@@ -4,12 +4,12 @@ metadata:
   name: argocd-ingress
   namespace: argocd
   annotations:
-    kubernetes.io/ingress.class: "traefik"
     traefik.ingress.kubernetes.io/router.entrypoints: "web"
     traefik.ingress.kubernetes.io/router.rule: "Host(`argocd.promotesudbury.ca`)"
 spec:
+  ingressClassName: traefik  # Use this instead of the deprecated annotation
   rules:
-  - host: argocd.promotesudbury.ca
+  - host: argocd.promotesudbury.ca  # Replace with your domain or external IP
     http:
       paths:
       - path: /
