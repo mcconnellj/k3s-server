@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: example-appset
+  namespace: argocd
+spec:
+  generators:
+  - git:
+      repoURL: https://github.com/mcconnellj/k3s-server.git  # Use your friend's repo URL
+      revision: main  # Branch or commit to pull from
+      files:
+      - path: "applications/cloud/"  # Directory containing the Kubernetes manifests
+  template:
+    metadata:
+      name: '{{name}}'
+    spec:
+      project: default  # You can adjust the project to suit your needs
+      source:
+        path: 'applications/cloud/'  # Path within the repo to apply manifests from
+        repoURL: https://github.com/mcconnellj/k3s-server.git  # Same repo URL from the generator
+        targetRevision: main  # Branch or commit to apply from
+        directory:
+          recurse: true  # Apply manifests recursively from this directory
+      destination:
+        name: staging-cluster
+        namespace: default  # Change as per your namespace
+      syncPolicy:
+        automated:
+          prune: true
+        syncOptions:
+          - CreateNamespace=true
