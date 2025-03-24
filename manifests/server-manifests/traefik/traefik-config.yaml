@@ -1,0 +1,7 @@
+apiVersion: helm.cattle.io/v1
+kind: HelmChartConfig
+metadata:
+  name: traefik
+  namespace: kube-system
+spec:
+  valuesFile: '{{ .Env.REPO_URL }}/manifests/{{ .Metadata.Name }}/values.yaml.skip'
