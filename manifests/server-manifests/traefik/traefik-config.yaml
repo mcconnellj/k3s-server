@@ -5,4 +5,4 @@ metadata:
   namespace: kube-system
 spec:
   chart: stable/traefik
-  valuesFiles: '{{ .Env.REPO_URL }}/manifests/server-manifests/{{ .Metadata.Name }}/values.yaml.skip'
+  valuesFile: '{{ .Env.REPO_URL }}/manifests/server-manifests/{{ .Metadata.Name }}/values.yaml.skip'

@@ -1,21 +1,14 @@
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
 metadata:
-  name: argocd-ingress
+  name: argocd-ui
   namespace: argocd
-  annotations:
-    traefik.ingress.kubernetes.io/router.entrypoints: "web"
-    traefik.ingress.kubernetes.io/router.rule: "Host(`argocd.promotesudbury.ca`)"
 spec:
-  ingressClassName: traefik  # Use this instead of the deprecated annotation
-  rules:
-  - host: argocd.promotesudbury.ca  # Replace with your domain or external IP
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: metrics-server-7bf7d58749-d9lht
-            port:
-              number: 80
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`argocd.promotesudbury.ca`) # Change the domain accordingly
+      kind: Rule
+      services:
+        - name: argocd-server
+          port: 80
