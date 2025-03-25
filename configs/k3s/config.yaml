@@ -1,0 +1,1 @@
+write-kubeconfig-mode: "644"  # Allows all users to read kubeconfig
