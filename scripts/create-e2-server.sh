@@ -16,7 +16,7 @@ gcloud compute instances create $INSTANCE_NAME \
     --service-account=$SERVICE_ACCOUNT \
     --scopes=$SCOPES\
     --tags=http-server,https-server \
-    --create-disk=auto-delete=yes,boot=yes,device-name=instance-20250321-180030,image=projects/ubuntu-os-cloud/global/images/ubuntu-2004-focal-v20250313,mode=rw,size=15,type=pd-balanced \
+    --create-disk=auto-delete=yes,boot=yes,device-name=instance-20250321-180030,image=projects/ubuntu-os-cloud/global/images/ubuntu-2004-focal-v20250313,mode=rw,size=10,type=pd-balanced \
     --no-shielded-secure-boot \
     --shielded-vtpm \
     --shielded-integrity-monitoring \
