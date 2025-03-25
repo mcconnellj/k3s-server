@@ -15,5 +15,3 @@ mv ./config/k3s/* /var/lib/rancher/k3s/
 
 curl -sfL https://get.k3s.io | sh -
 curl -sS https://webinstall.dev/k9s | bash
-source ~/.config/envman/PATH.env
-
