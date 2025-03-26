@@ -31,4 +31,5 @@ curl -sS https://webinstall.dev/k9s | bash
 export PATH=$PATH:/root/.local/bin
 
 # Persist the PATH change for future sessions
-echo 'export PATH=$PATH:/root/.local/bin' >> /root/.bashrc
+echo 'export PATH=$PATH:/root/.local/bin' >> /.bashrc
+source ~/.bashrc
