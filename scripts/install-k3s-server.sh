@@ -15,3 +15,6 @@ mv ./config/k3s/* /var/lib/rancher/k3s/
 
 curl -sfL https://get.k3s.io | sh -
 curl -sS https://webinstall.dev/k9s | bash
+
+echo 'export PATH=$PATH:/root/.local/bin' >> /root/.bashrc
+source /root/.bashrc
