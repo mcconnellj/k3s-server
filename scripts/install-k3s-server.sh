@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#Keep this - curl -fsSL https://raw.githubusercontent.com/mcconnellj/k3s-server/scripts/install-k3s.sh | sh -
+# Keep this - curl -fsSL https://raw.githubusercontent.com/mcconnellj/k3s-server/scripts/install-k3s.sh | sh -
 
 # Ensure the script runs as root or with sudo
 if [[ $EUID -ne 0 ]]; then
@@ -8,17 +8,17 @@ if [[ $EUID -ne 0 ]]; then
     exit 1
 fi
 
-# Set environment variables
-export HOME=/root
-export PATH=$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$HOME/.local/bin
-
-# Ensure the PATH includes /root/.local/bin for all users
-export PATH=$PATH:/root/.local/bin
-
-# Add the PATH to /etc/profile for persistence across reboots
-if ! grep -q "/root/.local/bin" /etc/profile; then
-    echo "export PATH=\$PATH:/root/.local/bin" >> /etc/profile
+# Create user josh_v_mcconnell if it doesn't exist
+if ! id -u "josh_v_mcconnell" &>/dev/null; then
+    echo "Creating user josh_v_mcconnell..."
+    useradd -m -s /bin/bash josh_v_mcconnell
+else
+    echo "User josh_v_mcconnell already exists."
 fi
+
+# Set environment variables for root
+export HOME=/root
+export PATH=$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$HOME/.local/bin:/root/.local/bin
 
 # Update system packages
 sudo apt update && sudo apt upgrade -y
@@ -38,24 +38,13 @@ mv ./config/k3s/* /var/lib/rancher/k3s/
 # Install K3s
 curl -sfL https://get.k3s.io | sh -
 
-# Install k9s via Webi
-curl -sS https://webinstall.dev/k9s | bash
+# Switch to the user josh_v_mcconnell and install k9s
+echo "Switching to user josh_v_mcconnell to install k9s..."
 
-# Ensure the PATH includes ~/.local/bin and ~/.local/opt/k9s-v*/bin
-export PATH=$PATH:/root/.local/bin:/root/.local/opt/k9s-v0.40.10/bin
+sudo -u josh_v_mcconnell bash -c 'curl -sS https://webinstall.dev/k9s | bash'
 
-# Source the envman PATH configuration if it exists
-if [[ -f /root/.config/envman/PATH.env ]]; then
-    source /root/.config/envman/PATH.env
-fi
+# Source .bashrc for the user josh_v_mcconnell
+sudo -u josh_v_mcconnell bash -c 'source $HOME/.bashrc'
 
-# Add the PATH to /etc/profile for persistence across reboots
-if ! grep -q "/root/.local/bin" /etc/profile; then
-    echo "export PATH=\$PATH:/root/.local/bin:/root/.local/opt/k9s-v0.40.10/bin" >> /etc/profile
-fi
-
-# Persist the PATH change for future sessions
-if ! grep -q "$HOME/.local/bin" $HOME/.bashrc; then
-    echo "export PATH=\$PATH:$HOME/.local/bin" >> $HOME/.bashrc
-fi
-source $HOME/.bashrc
+# Inform user that installation is complete
+echo "K9s has been installed for user josh_v_mcconnell."
