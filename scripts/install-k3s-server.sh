@@ -12,6 +12,14 @@ fi
 export HOME=/root
 export PATH=$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$HOME/.local/bin
 
+# Ensure the PATH includes /root/.local/bin for all users
+export PATH=$PATH:/root/.local/bin
+
+# Add the PATH to /etc/profile for persistence across reboots
+if ! grep -q "/root/.local/bin" /etc/profile; then
+    echo "export PATH=\$PATH:/root/.local/bin" >> /etc/profile
+fi
+
 # Update system packages
 sudo apt update && sudo apt upgrade -y
 
