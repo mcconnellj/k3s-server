@@ -1,10 +1,16 @@
 #!/bin/bash
 
 #Keep this - curl -fsSL https://raw.githubusercontent.com/mcconnellj/k3s-server/scripts/install-k3s.sh | sh -
-#!/bin/bash
 
-# Ensure the script runs as root
+# Ensure the script runs as root or with sudo
+if [[ $EUID -ne 0 ]]; then
+    echo "This script must be run as root or with sudo."
+    exit 1
+fi
+
+# Set environment variables
 export HOME=/root
+export PATH=$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$HOME/.local/bin
 
 # Update system packages
 sudo apt update && sudo apt upgrade -y
@@ -27,9 +33,8 @@ curl -sfL https://get.k3s.io | sh -
 # Install k9s via Webi
 curl -sS https://webinstall.dev/k9s | bash
 
-# Ensure the correct PATH is set for k9s **immediately**
-export PATH=$PATH:/root/.local/bin
-
 # Persist the PATH change for future sessions
-echo 'export PATH=$PATH:/root/.local/bin' >> /.bashrc
-source ~/.bashrc
+if ! grep -q "$HOME/.local/bin" $HOME/.bashrc; then
+    echo "export PATH=\$PATH:$HOME/.local/bin" >> $HOME/.bashrc
+fi
+source $HOME/.bashrc
