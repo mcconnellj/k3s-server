@@ -1,5 +1,6 @@
 curl -fsSL https://raw.githubusercontent.com/mcconnellj/k3s-server/scripts/install-k3s.sh | sh -
 
+curl -sSL https://raw.githubusercontent.com/mcconnellj/k3s-server/main/scripts/create-e2-server.sh | bash
 
 # Free Cloud Development Server
 
