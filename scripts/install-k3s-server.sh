@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #curl -fsSL https://raw.githubusercontent.com/mcconnellj/k3s-server/scripts/install-k3s.sh | sh -
-
+export HOME=/root
 sudo apt update && sudo apt upgrade -y
 
 mkdir -p /var/lib/rancher/k3s/server/manifests/
