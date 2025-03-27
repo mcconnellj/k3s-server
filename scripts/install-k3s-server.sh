@@ -3,8 +3,9 @@
 # Keep this curl -L -o k3s-server.zip "https://raw.githubusercontent.com/mcconnellj/k3s-server/scripts/install-k3s.sh?nocache=$(date +%s)" | sh -
 
 # Update system packages
-sudo apt update && sudo apt upgrade -y
-sudo apt install k9s -y
+apt update
+apt upgrade -y
+apt install k9s -y
 
 # Create necessary directories
 mkdir -p /var/lib/rancher/k3s/server/manifests/
