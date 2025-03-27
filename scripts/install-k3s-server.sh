@@ -23,8 +23,8 @@ python3 -m zipfile -e k3s-server.zip .
 rm k3s-server.zip
 
 # Move manifests and config files
-mv ./k3s-server-main/manifests/* /etc/rancher/k3s/server/manifests/
-mv ./k3s-server-main/config/k3s/* /var/lib/rancher/k3s/
+mv ./k3s-server-main/manifests/ /etc/rancher/k3s/server/manifests/
+mv ./k3s-server-main/config/k3s/ /var/lib/rancher/k3s/
 
 # Install K3s
 curl -sfL https://get.k3s.io | sh -
