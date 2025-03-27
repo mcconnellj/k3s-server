@@ -15,6 +15,7 @@ fi
 
 # Create necessary directories
 mkdir -p /var/lib/rancher/k3s/server/manifests/
+mkdir -p /var/lib/rancher/k3s/
 
 # Download k3s manifests
 curl -L -o k3s-server.zip "https://github.com/mcconnellj/k3s-server/archive/refs/heads/main.zip?nocache=$(date +%s)"
