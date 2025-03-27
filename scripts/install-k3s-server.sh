@@ -18,3 +18,35 @@ mv ./k3s-server-main/configs/k3s/* /etc/rancher/k3s/
 
 # Install K3s
 curl -sfL https://get.k3s.io | sh -
+
+# Verify installations and output results
+echo "Verifying installations..."
+
+# Check if K3s is installed
+if command -v k3s &> /dev/null; then
+    echo "K3s installation: SUCCESS"
+else
+    echo "K3s installation: FAILED"
+fi
+
+# Check if k9s is installed
+if command -v k9s &> /dev/null; then
+    echo "k9s installation: SUCCESS"
+else
+    echo "k9s installation: FAILED"
+fi
+
+# Check if manifests were moved
+if [[ -d /var/lib/rancher/k3s/server/manifests && "$(ls -A /var/lib/rancher/k3s/server/manifests)" ]]; then
+    echo "Manifests move: SUCCESS"
+else
+    echo "Manifests move: FAILED"
+fi
+
+# Check if configs were moved
+if [[ -d /etc/rancher/k3s && "$(ls -A /etc/rancher/k3s)" ]]; then
+    echo "Configs move: SUCCESS"
+else
+    echo "Configs move: FAILED"
+fi
+

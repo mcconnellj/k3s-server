@@ -31,3 +31,7 @@ gcloud compute instances create $INSTANCE_NAME \
     --labels=goog-ec-src=vm_add-gcloud \
     --reservation-affinity=any \
     --metadata=startup-script-url=https://raw.githubusercontent.com/mcconnellj/k3s-server/main/scripts/install-k3s-server.sh?nocache=$(date +%s)
+
+# SSH into the newly created instance
+echo "Attempting to SSH into the instance: $INSTANCE_NAME"
+gcloud compute ssh $INSTANCE_NAME --project=$GCP_PROJECT --zone=$GCP_ZONE
