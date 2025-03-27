@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Run this script curl -sSL https://raw.githubusercontent.com/mcconnellj/k3s-server/main/scripts/create-e2-server.sh | bash
+# Run this script curl -sSL https://raw.githubusercontent.com/mcconnellj/k3s-server/main/scripts/create-e2-server.sh?nocache=$(date +%s) | bash
 
 # Load environment variables from the .env file if needed
 source .env
@@ -30,4 +30,4 @@ gcloud compute instances create $INSTANCE_NAME \
     --shielded-integrity-monitoring \
     --labels=goog-ec-src=vm_add-gcloud \
     --reservation-affinity=any \
-    --metadata=startup-script-url=https://raw.githubusercontent.com/mcconnellj/k3s-server/main/scripts/install-k3s-server.sh
+    --metadata=startup-script-url=https://raw.githubusercontent.com/mcconnellj/k3s-server/main/scripts/install-k3s-server.sh?nocache=$(date +%s)
