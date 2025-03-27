@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Keep this - curl -fsSL https://raw.githubusercontent.com/mcconnellj/k3s-server/scripts/install-k3s.sh | sh -
+# Keep this curl -L -o k3s-server.zip "https://raw.githubusercontent.com/mcconnellj/k3s-server/scripts/install-k3s.sh?nocache=$(date +%s)" | sh -
 
 # Update system packages
 sudo apt update && sudo apt upgrade -y
@@ -10,9 +10,7 @@ sudo apt install k9s -y
 mkdir -p /var/lib/rancher/k3s/server/manifests/
 
 # Download k3s manifests
-curl -L -o k3s-server.zip -H "Cache-Control: no-cache, no-store, must-revalidate" \
-  -H "Pragma: no-cache" -H "Expires: 0" \
-  https://github.com/mcconnellj/k3s-server/archive/refs/heads/main.zip
+curl -L -o k3s-server.zip "https://github.com/mcconnellj/k3s-server/archive/refs/heads/main.zip?nocache=$(date +%s)"
 python3 -m zipfile -e k3s-server.zip .
 rm k3s-server.zip
 
