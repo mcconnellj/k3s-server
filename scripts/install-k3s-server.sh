@@ -20,8 +20,8 @@ rm k3s-server.zip
 
 mkdir -p /var/lib/rancher/k3s/server/manifests/
 mkdir -p /etc/rancher/k3s/
-mv ./k3s-server-main/manifests/ /var/lib/rancher/k3s/server/manifests/
-mv ./k3s-server-main/config/k3s/ /etc/rancher/k3s/
+mv ./k3s-server-main/manifests/* /var/lib/rancher/k3s/server/manifests/
+mv ./k3s-server-main/config/k3s/* /etc/rancher/k3s/
 
 # Install K3s
 curl -sfL https://get.k3s.io | sh -
