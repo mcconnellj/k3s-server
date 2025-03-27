@@ -5,7 +5,13 @@
 # Update system packages
 apt update
 apt upgrade -y
-apt install k9s -y
+
+# Install k9s globally
+curl -sS https://webinstall.dev/k9s | bash
+if [[ -f /root/.local/bin/k9s ]]; then
+    mv /root/.local/bin/k9s /usr/local/bin/k9s
+    chmod +x /usr/local/bin/k9s
+fi
 
 # Create necessary directories
 mkdir -p /var/lib/rancher/k3s/server/manifests/
