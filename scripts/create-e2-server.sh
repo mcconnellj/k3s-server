@@ -42,4 +42,4 @@ done
 
 # Attempt to SSH into the newly created instance
 echo "Attempting to SSH into the instance: $INSTANCE_NAME"
-gcloud compute ssh $INSTANCE_NAME --project=$GCP_PROJECT --zone=$GCP_ZONE
+gcloud compute ssh $INSTANCE_NAME --project=$GCP_PROJECT --zone=$GCP_ZONE -- -t
