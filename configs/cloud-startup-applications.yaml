@@ -1,0 +1,10 @@
+key:
+  components:
+    - givenName: traefik
+      chart: traefik/traefik
+      version: "34.4.1"
+      releaseName: traefik 
+      repoUrl: "https://traefik.github.io/charts"
+      namespace: kube-system
+      clusterName: default 
+      environment: development

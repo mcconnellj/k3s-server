@@ -1,0 +1,49 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: demo-appset
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions:
+  - missingkey=error
+  generators:
+    - matrix:
+        generators:
+        - git:
+            repoURL: "https://github.com/mcconnellj/k3s-server.git"
+            revision: main
+            files:
+            - path: configs/cloud-applications/applications.yaml
+        - list:
+            elements: []
+            elementsYaml: '{{ .key.components | toJson }}'
+  template:
+    metadata:
+      name: "{{.givenName}}-{{.environment}}-{{.clusterName}}"
+    spec:
+      project: '{{.environment}}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+        - PrunePropagationPolicy=foreground
+        - PrunePropagationPolicy=background
+        - CreateNamespace=true
+        - ServerSideApply=true
+      sources:
+        - chart: '{{.chart}}'
+          repoURL: '{{.repoUrl}}'
+          targetRevision: '{{.version}}'
+          helm:
+            releaseName: '{{.releaseName}}'
+            valueFiles:
+            - $values/applications/{{.givenName}}/default.values.yaml
+            - $values/applications/{{.givenName}}/{{.environment}}.values.yaml
+        - repoURL: "https://github.com/mcconnellj/k3s-server"
+          targetRevision: main
+          ref: values
+      destination:
+        namespace: '{{.environment}}'
+        name: '{{.clusterName}}'

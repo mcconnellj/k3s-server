@@ -1,0 +1,50 @@
+deployment:
+  kind: Deployment
+  replicas: 1
+  annotations: {}
+  labels: {}
+  podAnnotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "8082"
+  podLabels: {}
+
+ingressRoute:
+  dashboard:
+    enabled: true
+    matchRule: Host(`traefik.promotesudbury.ca`)
+    services:
+      - name: api@internal
+        kind: TraefikService
+    entryPoints: ["traefik"]
+
+  argocd:
+    enabled: true
+    matchRule: Host(`argocd.promotesudbury.ca`)
+    services:
+      - name: argocd-server
+        port: 443
+    entryPoints: ["traefik"]
+
+providers:
+  kubernetesCRD:
+    enabled: true
+
+  kubernetesIngress:
+    enabled: false
+
+priorityClassName: "system-cluster-critical"
+
+image:
+  registry: docker.io
+  repository: traefik
+  tag: "3.3.2"
+
+tolerations:
+  - key: "CriticalAddonsOnly"
+    operator: "Exists"
+  - key: "node-role.kubernetes.io/control-plane"
+    operator: "Exists"
+    effect: "NoSchedule"
+  - key: "node-role.kubernetes.io/master"
+    operator: "Exists"
+    effect: "NoSchedule"
