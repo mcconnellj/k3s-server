@@ -32,14 +32,3 @@ gcloud compute instances create $INSTANCE_NAME \
     --reservation-affinity=any \
     --metadata=startup-script-url=https://raw.githubusercontent.com/mcconnellj/k3s-server/main/scripts/install-k3s-server.sh?nocache=$(date +%s)
 
-# Wait for the SSH port to become available
-echo "Waiting for SSH port (22) to become available on instance: $INSTANCE_NAME"
-for i in {1..10}; do
-    nc -z -w5 $(gcloud compute instances describe $INSTANCE_NAME --project=$GCP_PROJECT --zone=$GCP_ZONE --format='get(networkInterfaces[0].accessConfigs[0].natIP)') 22 && break
-    echo "Attempt $i: SSH port not open yet. Retrying in 10 seconds..."
-    sleep 10
-done
-
-# Attempt to SSH into the newly created instance
-echo "Attempting to SSH into the instance: $INSTANCE_NAME"
-gcloud compute ssh $INSTANCE_NAME --project=$GCP_PROJECT --zone=$GCP_ZONE -- -t
