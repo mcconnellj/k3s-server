@@ -22,7 +22,6 @@ spec:
     metadata:
       name: "{{.givenName}}-{{.environment}}-{{.clusterName}}"
     spec:
-      project: '{{.environment}}'
       syncPolicy:
         automated:
           prune: true

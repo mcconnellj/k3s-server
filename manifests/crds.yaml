@@ -5,3 +5,4 @@ metadata:
   namespace: kube-system
 spec:
   chart: https://%{KUBERNETES_API}%/static/charts/traefik-crd-34.2.1+up34.2.0.tgz
+---
