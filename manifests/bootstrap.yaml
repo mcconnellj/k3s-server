@@ -17,7 +17,7 @@ apiVersion: helm.cattle.io/v1
 kind: HelmChart
 metadata:
   name: argocd
-  namespace: kube-system
+  namespace: argocd
 spec:
   repo: https://argoproj.github.io/argo-helm
   chart: argo-cd
@@ -52,6 +52,7 @@ spec:
     metadata:
       name: "{{.givenName}}-{{.environment}}-{{.clusterName}}"
     spec:
+      project: '{{.environment}}'
       syncPolicy:
         automated:
           prune: true
