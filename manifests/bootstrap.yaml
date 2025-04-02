@@ -3,13 +3,6 @@ kind: Namespace
 metadata:
   name: development
   labels:
-    environment: argocd
----
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: development
-  labels:
     environment: development
 ---
 apiVersion: helm.cattle.io/v1
@@ -23,12 +16,13 @@ spec:
 apiVersion: helm.cattle.io/v1
 kind: HelmChart
 metadata:
-  name: argo-cd
+  name: argocd
   namespace: kube-system
 spec:
   repo: https://argoproj.github.io/argo-helm
   chart: argo-cd
   targetNamespace: argocd
+  createNamespace: true
   version: 7.8.18
   valuesFiles:
     - https://github.com/mcconnellj/k3s-server/applications/argocd/default.values.yaml
@@ -37,7 +31,7 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: demo-appset
+  name: development
   namespace: argocd
 spec:
   goTemplate: true
