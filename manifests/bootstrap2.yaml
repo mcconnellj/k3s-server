@@ -1,0 +1,49 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: namespaces
+  namespace: openshift-gitops
+spec:
+  goTemplate: true
+  generators:
+      generators:
+    - matrix:
+        generators:
+        - git:
+            repoURL: "https://github.com/mcconnellj/k3s-server.git"
+            revision: main
+            directories:
+              - path: configs/enviroment/*
+        - list:
+            elements: []
+            elementsYaml: '{{ .components | toJson }}'
+  template:
+    metadata:
+      name: '{{ .enviroment }}-{{ .parentKey }}-config'
+    labels:
+      enviroment: '{{ .enviroment }}'
+    annotations:
+    spec:
+      destination:
+        namespace: '{{ .enviroment }}'
+        server: 'https://kubernetes.default.svc'
+      project: '{{ .enviroment }}'
+      sources:
+        - path: /templates/{{ .parentKey }}.yaml
+          repoURL: 'https://github.com/mcconnellj/k3s-server.git'
+          targetRevision: HEAD
+          helm:
+            valueFiles:
+              - $values/appset-helm-demo/projects/{{.path.basename}}/values.yaml
+            parameters:
+              - name: projectName
+                value: '{{.path.basename}}'
+              - name: argoNamespace
+                value: openshift-gitops
+        - repoURL: 'https://github.com/piomin/argocd-showcase.git'
+          targetRevision: HEAD
+          ref: values
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true

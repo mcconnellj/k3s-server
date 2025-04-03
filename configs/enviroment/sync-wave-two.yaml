@@ -1,5 +1,5 @@
-key:
-  components:
+components:
+  applications:
     - givenName: traefik
       chart: traefik/traefik
       version: "34.4.1"
@@ -8,3 +8,7 @@ key:
       namespace: kube-system
       clusterName: default 
       environment: development
+      source:
+        chart: traefik
+        repoURL: "https://traefik.github.io/charts"
+        targetRevision: "34.4.1"

@@ -1,0 +1,21 @@
+components:
+  chart:
+    - name: appproject-crd
+      url: https://raw.githubusercontent.com/argoproj/argo-cd/master/manifests/crds/appproject-crd.yaml
+    - name: traefik-crd
+      url: https://github.com/traefik/traefik-helm-chart/releases/download/v34.2.1/traefik-crds.yaml
+  namespace:
+    - name: argocd
+      labels:
+        protected: true
+    - name: development
+      labels:
+        development: true
+    - name: production
+      labels:
+        development: true
+  project:
+    - name: development
+      namespace: development
+      labels:
+        development: true
