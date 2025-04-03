@@ -1,13 +1,12 @@
 components:
   applications:
-    - givenName: traefik
+    - name: traefik
       chart: traefik/traefik
       version: "34.4.1"
       releaseName: traefik 
       repoUrl: "https://traefik.github.io/charts"
-      namespace: kube-system
+      namespace: wave-one
       clusterName: default 
-      environment: development
       source:
         chart: traefik
         repoURL: "https://traefik.github.io/charts"

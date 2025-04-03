@@ -1,0 +1,8 @@
+components:
+  enviroment:
+    - name: development
+    - name: production
+  cluster:
+    - name: prod
+    - name: dev
+    - name: edge

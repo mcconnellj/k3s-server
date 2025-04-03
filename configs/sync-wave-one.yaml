@@ -5,17 +5,12 @@ components:
     - name: traefik-crd
       url: https://github.com/traefik/traefik-helm-chart/releases/download/v34.2.1/traefik-crds.yaml
   namespace:
-    - name: argocd
-      labels:
-        protected: true
-    - name: development
-      labels:
-        development: true
-    - name: production
-      labels:
-        development: true
+    - name: edge
+    - name: tenant
+    - name: infra
+    - name: core
   project:
     - name: development
       namespace: development
-      labels:
-        development: true
+    - name: production
+      namespace: production
