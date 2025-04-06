@@ -5,12 +5,14 @@ metadata:
   namespace: core
 spec:
   goTemplate: true
+  goTemplateOptions:
+  - missingkey=error
   generators:
     - git:
         repoURL: https://github.com/mcconnellj/k3s-server/
         revision: HEAD
         directory:
-          - path: /config/sync-waves/*
+          path: config/sync-waves/*
     - list:
         elements: []
         elementsYaml: '{{ . | toJson }}'

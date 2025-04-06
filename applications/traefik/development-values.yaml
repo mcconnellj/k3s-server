@@ -25,6 +25,87 @@ ingressRoute:
         port: 443
     entryPoints: ["traefik"]
 
+  keycloak:
+    enabled: true
+    matchRule: Host(`keycloak.promotesudbury.ca`)
+    services:
+      - name: keycloak
+        port: 8080
+    entryPoints: ["traefik"]
+
+  # loki:
+  #   enabled: true
+  #   matchRule: Host(`loki.promotesudbury.ca`)
+  #   services:
+  #     - name: loki
+  #       port: 3100
+  #   entryPoints: ["traefik"]
+
+  # n8n:
+  #   enabled: true
+  #   matchRule: Host(`n8n.promotesudbury.ca`)
+  #   services:
+  #     - name: n8n
+  #       port: 5678
+  #   entryPoints: ["traefik"]
+
+  # open-project:
+  #   enabled: true
+  #   matchRule: Host(`open-project.promotesudbury.ca`)
+  #   services:
+  #     - name: open-project
+  #       port: 80
+  #   entryPoints: ["traefik"]
+
+  postgres:
+    enabled: true
+    matchRule: Host(`postgres.promotesudbury.ca`)
+    services:
+      - name: postgres
+        port: 5432
+    entryPoints: ["traefik"]
+
+  # prometheus-stack:
+  #   enabled: true
+  #   matchRule: Host(`prometheus-stack.promotesudbury.ca`)
+  #   services:
+  #     - name: prometheus
+  #       port: 9090
+  #   entryPoints: ["traefik"]
+
+  redis:
+    enabled: true
+    matchRule: Host(`redis.promotesudbury.ca`)
+    services:
+      - name: redis
+        port: 6379
+    entryPoints: ["traefik"]
+
+  # tailscale:
+  #   enabled: true
+  #   matchRule: Host(`tailscale.promotesudbury.ca`)
+  #   services:
+  #     - name: tailscale
+  #       port: 80
+  #   entryPoints: ["traefik"]
+
+  vault:
+    enabled: true
+    matchRule: Host(`vault.promotesudbury.ca`)
+    services:
+      - name: vault
+        port: 8200
+    entryPoints: ["traefik"]
+
+  vaultwarden:
+    enabled: true
+    matchRule: Host(`vaultwarden.promotesudbury.ca`)
+    services:
+      - name: vaultwarden
+        port: 80
+    entryPoints: ["traefik"]
+
+
 providers:
   kubernetesCRD:
     enabled: true
