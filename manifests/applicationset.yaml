@@ -1,0 +1,38 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: namespace-application-set
+  namespace: core
+spec:
+  goTemplate: true
+  generators:
+    - git:
+        repoURL: https://github.com/mcconnellj/k3s-server/
+        revision: HEAD
+        directory:
+          - path: /config/sync-waves/*
+    - list:
+        elements: []
+        elementsYaml: '{{ . | toJson }}'
+  template:
+    metadata:
+      name: 'namespace-deployment'
+    spec:
+      destination:
+        namespace: 'core'
+        server: 'https://kubernetes.default.svc'
+      project: default
+      sources:
+        - path: templates/applicationset.yaml
+          repoURL: 'https://github.com/mcconnellj/k3s-server/'
+          targetRevision: HEAD
+          helm:
+            parameters:
+              - name: parameters
+                value: '{{ . | toJson }}'
+              - name: type
+                value: '{{ .baseName }}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true

@@ -1,6 +1,6 @@
-{{- range .Values.stages }}
+{{- range .Values.parameters }}
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: {{ $.Values.projectName }}-{{ .name }}
+  name: {{ .name }}
 {{- end }}

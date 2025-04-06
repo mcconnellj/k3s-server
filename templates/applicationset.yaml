@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: '{{ .Values.parameters.type }}-deployment'
+  namespace: argocd
+spec:
+  goTemplate: true
+  generators:
+    - list:
+        elements: []
+        elementsYaml: '{{ .Values.parameters | toJson }}'
+  template:
+    metadata:
+      name: '{{ .Values.type }}-deployment'
+    spec:
+      destination:
+        namespace: 'core'
+        server: 'https://kubernetes.default.svc'
+      project: default
+      sources:
+        - path: templates/{{ .Values.type }}.yaml
+          repoURL: 'https://github.com/mcconnellj/k3s-server/'
+          targetRevision: HEAD
+          helm:
+            parameters:
+              - name: parameters
+                value: '{{ . | toJson }}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
