@@ -1,8 +1,9 @@
+{{- range .Values.parameters }}
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: {{ .Values.projectName }}
-  namespace: {{ .Values.argoNamespace | default "argocd" }}
+  name: {{ .name }}
+  namespace: {{ .namespace | default "argocd" }}
 spec:
   clusterResourceWhitelist:
     - group: '*'
@@ -12,3 +13,4 @@ spec:
       server: '*'
   sourceRepos:
     - '*'
+{{- end }}
