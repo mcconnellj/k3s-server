@@ -8,27 +8,6 @@ metadata:
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: edge
-  labels:
-    name: edge
----
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: tenant
-  labels:
-    name: tenant
----
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: data
-  labels:
-    name: data
----
-apiVersion: v1
-kind: Namespace
-metadata:
   name: core
   labels:
     name: core

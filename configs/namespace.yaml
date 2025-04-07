@@ -1,5 +1,0 @@
-namespace:
-  - name: edge
-  - name: tenant
-  - name: data
-  - name: core
