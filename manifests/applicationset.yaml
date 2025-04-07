@@ -21,7 +21,7 @@ spec:
       name: 'namespace-deployment'
     spec:
       destination:
-        namespace: 'core'
+        namespace: core
         server: 'https://kubernetes.default.svc'
       project: default
       sources:
