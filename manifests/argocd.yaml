@@ -22,14 +22,15 @@ spec:
   goTemplateOptions:
   - missingkey=error
   generators:
-    - git:
-        repoURL: https://github.com/mcconnellj/k3s-server/
-        revision: HEAD
-        directory:
-          path: config/sync-waves/*
-    - list:
-        elements: []
-        elementsYaml: '{{ . | toJson }}'
+    matrix:
+      - git:
+          repoURL: https://github.com/mcconnellj/k3s-server/
+          revision: HEAD
+          directory:
+            path: config/sync-waves/*
+      - list:
+          elements: []
+          elementsYaml: '{{ . | toJson }}'
   template:
     metadata:
       name: 'namespace-deployment'
