@@ -15,9 +15,6 @@ spec:
   chart: argo-cd
   targetNamespace: argocd
   version: 7.8.18
-  valuesFiles:
-    - https://github.com/mcconnellj/k3s-server/applications/argocd/default.values.yaml
-    - https://github.com/mcconnellj/k3s-server/applications/argocd/development.values.yaml
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
