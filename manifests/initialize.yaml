@@ -1,0 +1,67 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: argocd
+  labels:
+    name: argocd
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: tenant
+  labels:
+    name: tenant
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: core
+  labels:
+    name: core
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: data
+  labels:
+    name: data
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: edge
+  labels:
+    name: edge
+---
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: argocd
+  namespace: argocd
+spec:
+  repo: https://argoproj.github.io/argo-helm
+  chart: argo-cd
+  targetNamespace: argocd
+  version: 7.8.18
+---
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: traefik
+  namespace: core
+spec:
+  repo: https://traefik.github.io/charts
+  chart: traefik
+  targetNamespace: core
+  version: 34.5.0
+---
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: vault
+  namespace: core
+spec:
+  repo: https://helm.releases.hashicorp.com
+  chart: vault
+  targetNamespace: core
+  version: 0.30.0
