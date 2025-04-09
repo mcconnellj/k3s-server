@@ -1,36 +1,33 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: namespaces-from-git
+  name: core-deployment
   namespace: argocd
 spec:
   generators:
     - clusters: {}
     - git:
-        repoURL: https://github.com/your-org/platform-configs.git
+        repoURL: https://github.com/mcconnellj/k3s-server.git
         revision: HEAD
         files:
           - path: configs/**/config.yaml
   template:
     metadata:
-      name: "{{.cluster}}-{{appName}}"
-      annotations:
-        argocd.argoproj.io/manifest-generate-paths: ".;.."
+      name: "{{ .cluster }}-{{ .appName }}"
     spec:
-      project: bootstrap
+      project: default
       source:
-        repoURL: git@github.com:mprzygrodzki/aws-eks-bootstrap.git
-        targetRevision: HEAD
-        path: "charts/{{appName}}"
+        repoURL: "{{ .app-repoUrl }}"
+        targetRevision: "{{ .app-version }}"
+        path: "{{ .app-chart }}"
         helm:
-          # Release name override (defaults to application name)
-          releaseName: "{{appName}}"
+          releaseName: "{{ .app-name }}"
           valueFiles:
-          - "values.yaml"
-          - "../../applications/{{name}}/values.yaml"
+            - "https://raw.githubusercontent.com/mcconnellj/k3s-server/HEAD/applications/{{ .appName }}/values.yaml"
+            - "https://raw.githubusercontent.com/mcconnellj/k3s-server/HEAD/applications/{{ .appEnvironment }}-values.yaml"
       destination:
-        name: "{{name}}"
-        namespace: "{{namespace}}"
+        server: "https://kubernetes.default.svc"
+        namespace: "argocd"
       syncPolicy:
         automated:
           prune: true
