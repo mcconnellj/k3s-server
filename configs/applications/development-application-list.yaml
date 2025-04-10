@@ -1,54 +1,54 @@
 applications:
   - app-name: actualbudget
-    app-enviroment: development
+    app-environment: development
     app-chart: community-charts/actualbudget
     app-repoUrl: https://community-charts.github.io/helm-charts
     app-version: 1.4.2
 
   - app-name: kube-prometheus-stack
-    app-enviroment: development
+    app-environment: development
     app-chart: prometheus-community/kube-prometheus-stack
     app-repoUrl: https://prometheus-community.github.io/helm-charts
     app-version: 70.4.1
 
   - app-name: traefik
-    app-enviroment: development
+    app-environment: development
     app-chart: traefik/traefik
     app-repoUrl: https://traefik.github.io/charts
     app-version: 34.5.0
 
   - app-name: vault
-    app-enviroment: development
+    app-environment: development
     app-chart: hashicorp/vault
     app-repoUrl: https://helm.releases.hashicorp.com
     app-version: 0.30.0
 
   - app-name: keycloak
-    app-enviroment: development
+    app-environment: development
     app-chart: bitnami/keycloak
     app-repoUrl: https://charts.bitnami.com/bitnami
     app-version: 24.5.0
 
   - app-name: loki
-    app-enviroment: development
+    app-environment: development
     app-chart: grafana/loki
     app-repoUrl: https://grafana.github.io/helm-charts
     app-version: 6.29.0
 
   - app-name: openproject
-    app-enviroment: development
+    app-environment: development
     app-chart: openproject-helm-charts/openproject
     app-repoUrl: https://charts.openproject.org
     app-version: 9.8.3
 
   - app-name: postgresql
-    app-enviroment: development
+    app-environment: development
     app-chart: bitnami/postgresql
     app-repoUrl: https://charts.bitnami.com/bitnami
     app-version: 16.6.0
 
   - app-name: redis
-    app-enviroment: development
+    app-environment: development
     app-chart: bitnami/redis
     app-repoUrl: https://charts.bitnami.com/bitnami
     app-version: 20.11.4

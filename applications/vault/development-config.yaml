@@ -1,0 +1,6 @@
+app-name: vault  
+app-environment: development  
+app-chart: hashicorp/vault  
+app-repoUrl: https://helm.releases.hashicorp.com  
+app-version: 0.30.0  
+namespace: core  

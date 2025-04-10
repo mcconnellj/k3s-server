@@ -1,0 +1,6 @@
+app-name: kube-prometheus-stack  
+app-environment: development  
+app-chart: prometheus-community/kube-prometheus-stack  
+app-repoUrl: https://prometheus-community.github.io/helm-charts  
+app-version: 70.4.2  
+namespace: core 

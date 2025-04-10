@@ -1,0 +1,6 @@
+app-name: odoo  
+app-environment: development  
+app-chart: bitnami/odoo  
+app-repoUrl: https://charts.bitnami.com/bitnami  
+app-version: 28.2.2  
+namespace: tenant

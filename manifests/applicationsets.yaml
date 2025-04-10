@@ -10,10 +10,10 @@ spec:
         repoURL: https://github.com/mcconnellj/k3s-server.git
         revision: HEAD
         files:
-          - path: configs/**/config.yaml
+          - path: applications/*/*-config.yaml
   template:
     metadata:
-      name: "{{ .cluster }}-{{ .appName }}"
+      name: "{{ .cluster }}-{{ .app-name }}"
     spec:
       project: default
       source:
@@ -27,7 +27,7 @@ spec:
             - "https://raw.githubusercontent.com/mcconnellj/k3s-server/HEAD/applications/{{ .appEnvironment }}-values.yaml"
       destination:
         server: "https://kubernetes.default.svc"
-        namespace: "argocd"
+        namespace: "{{ .namespace }}"
       syncPolicy:
         automated:
           prune: true
@@ -36,113 +36,3 @@ spec:
           - CreateNamespace=true
         retry:
           limit: 2
-# ---
-# # ApplicationSet for AppProjects
-# apiVersion: argoproj.io/v1alpha1
-# kind: ApplicationSet
-# metadata:
-#   name: appprojects-from-git
-#   namespace: argocd
-# spec:
-#   generators:
-#     - git:
-#         repoURL: https://github.com/your-org/platform-configs.git
-#         revision: HEAD
-#         directories:
-#           - path: projects/*
-#   template:
-#     metadata:
-#       name: '{{ path.basename }}-project'
-#     spec:
-#       project: default
-#       source:
-#         repoURL: https://github.com/your-org/platform-configs.git
-#         targetRevision: HEAD
-#         path: '{{ path }}'
-#       destination:
-#         server: https://kubernetes.default.svc
-#         namespace: argocd
-#       syncPolicy:
-#         automated:
-#           selfHeal: true
-#           prune: true
-# ---
-# apiVersion: argoproj.io/v1alpha1
-# kind: ApplicationSet
-# metadata:
-#   name: applications-from-env-files
-#   namespace: argocd
-# spec:
-#   generators:
-#     - matrix:
-#         generators:
-#           - git:
-#               repoURL: https://github.com/your-org/platform-configs.git
-#               revision: HEAD
-#               files:
-#                 - path: enviroments/*.yaml
-#           - list:
-#               elements: 
-#                 - '{{ applications }}'
-#   template:
-#     metadata:
-#       name: '{{ item.name }}'
-#     spec:
-#       project: default
-#       source:
-#         repoURL: https://github.com/your-org/platform-configs.git
-#         targetRevision: HEAD
-#         path: '{{ item.path }}'
-#         helm:
-#           parameters:
-#             - name: image.tag
-#               value: '{{ item.version }}'
-#       destination:
-#         server: https://kubernetes.default.svc
-#         namespace: '{{ item.namespace | default("default") }}'
-#       syncPolicy:
-#         automated:
-#           selfHeal: true
-#           prune: true
-
-# apiVersion: argoproj.io/v1alpha1
-# kind: ApplicationSet
-# metadata:
-#   name: namespace-application-set
-#   namespace: core
-# spec:
-#   goTemplate: true
-#   goTemplateOptions:
-#   - missingkey=error
-#   generators:
-#     matrix:
-#       - git:
-#           repoURL: https://github.com/mcconnellj/k3s-server/
-#           revision: HEAD
-#           directory:
-#             path: config/sync-waves/*
-#       - list:
-#           elements: []
-#           elementsYaml: '{{ . | toJson }}'
-#   template:
-#     metadata:
-#       name: 'namespace-deployment'
-#     spec:
-#       destination:
-#         namespace: core
-#         server: 'https://kubernetes.default.svc'
-#       project: default
-#       sources:
-#         - path: templates/applicationset.yaml
-#           repoURL: 'https://github.com/mcconnellj/k3s-server/'
-#           targetRevision: HEAD
-#           helm:
-#             parameters:
-#               - name: parameters
-#                 value: '{{ . | toJson }}'
-#               - name: type
-#                 value: '{{ .baseName }}'
-#       syncPolicy:
-#         automated:
-#           prune: true
-#           selfHeal: true
