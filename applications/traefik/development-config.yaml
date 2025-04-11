@@ -1,0 +1,13 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: traefik-development
+  namespace: edge
+spec:
+  source:
+    repoURL: https://traefik.github.io/charts
+    chart: traefik/traefik
+    targetRevision: 34.5.0
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: edge

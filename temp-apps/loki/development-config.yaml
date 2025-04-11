@@ -1,0 +1,6 @@
+app-name: loki  
+app-environment: development  
+app-chart: grafana/loki  
+app-repoUrl: https://grafana.github.io/helm-charts  
+app-version: 6.29.0  
+namespace: core  

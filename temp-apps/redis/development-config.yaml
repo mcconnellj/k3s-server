@@ -1,0 +1,6 @@
+app-name: redis  
+app-environment: development  
+app-chart: bitnami/redis  
+app-repoUrl: https://charts.bitnami.com/bitnami  
+app-version: 20.11.4  
+namespace: data

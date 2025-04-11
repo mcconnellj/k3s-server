@@ -1,0 +1,6 @@
+app-name: n8n  
+app-environment: development  
+app-chart: oci://8gears.container-registry.com/library/n8n  
+app-repoUrl: oci://8gears.container-registry.com/library  
+app-version: 1.0.6  
+namespace: tenant  

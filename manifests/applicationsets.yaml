@@ -3,6 +3,8 @@ kind: ApplicationSet
 metadata:
   name: core-deployment
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
 spec:
   generators:
     - clusters: {}
@@ -10,29 +12,29 @@ spec:
         repoURL: https://github.com/mcconnellj/k3s-server.git
         revision: HEAD
         files:
-          - path: applications/*/*-config.yaml
-  template:
-    metadata:
-      name: "{{ .cluster }}-{{ .app-name }}"
-    spec:
-      project: default
-      source:
-        repoURL: "{{ .app-repoUrl }}"
-        targetRevision: "{{ .app-version }}"
-        path: "{{ .app-chart }}"
-        helm:
-          releaseName: "{{ .app-name }}"
-          valueFiles:
-            - "https://raw.githubusercontent.com/mcconnellj/k3s-server/HEAD/applications/{{ .appName }}/values.yaml"
-            - "https://raw.githubusercontent.com/mcconnellj/k3s-server/HEAD/applications/{{ .appEnvironment }}-values.yaml"
-      destination:
-        server: "https://kubernetes.default.svc"
-        namespace: "{{ .namespace }}"
-      syncPolicy:
-        automated:
-          prune: true
-          selfHeal: true
-        syncOptions:
-          - CreateNamespace=true
-        retry:
-          limit: 2
+          - path: applications/**-config.yaml
+      template:
+        metadata:
+          name: "{{ .cluster }}-{{ .appName }}"
+        spec:
+          project: default
+          source:
+            repoURL: "{{ .appRepoUrl }}"
+            targetRevision: "{{ .appVersion }}"
+            path: "{{ .appChart }}"
+            helm:
+              releaseName: "{{ .appName }}"
+              valueFiles:
+                - "https://raw.githubusercontent.com/mcconnellj/k3s-server/HEAD/applications/{{ .appName }}/values.yaml"
+                - "https://raw.githubusercontent.com/mcconnellj/k3s-server/HEAD/applications/{{ .appEnvironment }}-values.yaml"
+          destination:
+            server: "https://kubernetes.default.svc"
+            namespace: "{{ .namespace }}"
+          syncPolicy:
+            automated:
+              prune: true
+              selfHeal: true
+            syncOptions:
+              - CreateNamespace=true
+            retry:
+              limit: 2

@@ -1,0 +1,6 @@
+app-name: keycloak  
+app-environment: development  
+app-chart: bitnami/keycloak  
+app-repoUrl: https://charts.bitnami.com/bitnami  
+app-version: 24.5.0  
+namespace: core  

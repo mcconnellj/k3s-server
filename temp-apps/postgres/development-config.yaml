@@ -1,0 +1,6 @@
+app-name: postgresql  
+app-environment: development  
+app-chart: bitnami/postgresql  
+app-repoUrl: https://charts.bitnami.com/bitnami  
+app-version: 16.6.0  
+namespace: data 
