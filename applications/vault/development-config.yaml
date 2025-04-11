@@ -1,6 +1,13 @@
-app-name: vault  
-app-environment: development  
-app-chart: hashicorp/vault  
-app-repoUrl: https://helm.releases.hashicorp.com  
-app-version: 0.30.0  
-namespace: core  
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: vault-development
+  namespace: data
+spec:
+  source:
+    repoURL: https://helm.releases.hashicorp.com
+    chart: hashicorp/vault
+    targetRevision: 0.30.0
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: data

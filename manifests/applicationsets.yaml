@@ -12,24 +12,24 @@ spec:
         repoURL: https://github.com/mcconnellj/k3s-server.git
         revision: HEAD
         files:
-          - path: applications/**-config.yaml
+          - path: 'applications/**-config.yaml'
       template:
         metadata:
-          name: "{{ .cluster }}-{{ .appName }}"
+          name: '{{ .cluster }}-{{ .metadata.name }}'
         spec:
           project: default
           source:
-            repoURL: "{{ .appRepoUrl }}"
-            targetRevision: "{{ .appVersion }}"
-            path: "{{ .appChart }}"
+            repoURL: '{{ .spec.source.repoURL }}'
+            targetRevision: '{{ .spec.source.targetRevision }}'
+            path: '{{ .spec.source.chart }}'
             helm:
-              releaseName: "{{ .appName }}"
+              releaseName: '{{ .metadata.name }}'
               valueFiles:
-                - "https://raw.githubusercontent.com/mcconnellj/k3s-server/HEAD/applications/{{ .appName }}/values.yaml"
-                - "https://raw.githubusercontent.com/mcconnellj/k3s-server/HEAD/applications/{{ .appEnvironment }}-values.yaml"
+                - 'https://raw.githubusercontent.com/mcconnellj/k3s-server/HEAD/applications/{{ .metadata.name }}/values.yaml'
+                - 'https://raw.githubusercontent.com/mcconnellj/k3s-server/HEAD/applications/{{ .metadata.namespace }}-values.yaml'
           destination:
-            server: "https://kubernetes.default.svc"
-            namespace: "{{ .namespace }}"
+            server: '{{ .spec.destination.server }}'
+            namespace: '{{ .spec.destination.namespace }}'
           syncPolicy:
             automated:
               prune: true
@@ -38,3 +38,8 @@ spec:
               - CreateNamespace=true
             retry:
               limit: 2
+
+#keep 
+# valueFiles:
+#   - "https://raw.githubusercontent.com/mcconnellj/k3s-server/HEAD/applications/{{ .appName }}/values.yaml"
+#   - "https://raw.githubusercontent.com/mcconnellj/k3s-server/HEAD/applications/{{ .appEnvironment }}-values.yaml"

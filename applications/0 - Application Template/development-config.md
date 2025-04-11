@@ -1,9 +1,16 @@
-app-name: <app-name>
-app-environment: development
-app-chart: <chart-path> # e.g., bitnami/redis
-app-repoUrl: <repo-url> # e.g., https://charts.bitnami.com/bitnami
-app-version: <version>  # e.g., 6.29.0
-namespace: <namespace>  # e.g., default
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: <application-name>
+  namespace: <argocd-namespace>
+spec:
+  source:
+    repoURL: <helm-repository-url>
+    chart: <chart-name>
+    targetRevision: <chart-version>
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: <target-namespace>
 
 # Applications from apps.md
 app-name: actualbudget
