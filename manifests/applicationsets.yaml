@@ -15,7 +15,7 @@ spec:
           - path: 'applications/**-config.yaml'
       template:
         metadata:
-          name: '{{ .cluster }}-{{ .metadata.name }}'
+          name: '{{ .cluster }}-  {{ .metadata.name }}'
         spec:
           project: default
           source:
