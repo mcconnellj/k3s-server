@@ -13,31 +13,31 @@ spec:
         revision: HEAD
         files:
           - path: 'applications/**-config.yaml'
-      template:
-        metadata:
-          name: '{{ .cluster }}-{{ .metadata.name }}'
-        spec:
-          project: default
-          source:
-            repoURL: '{{ .spec.source.repoURL }}'
-            targetRevision: '{{ .spec.source.targetRevision }}'
-            path: '{{ .spec.source.chart }}'
-            helm:
-              releaseName: '{{ .metadata.name }}'
-              valueFiles:
-                - 'https://raw.githubusercontent.com/mcconnellj/k3s-server/HEAD/applications/{{ .metadata.name }}/values.yaml'
-                - 'https://raw.githubusercontent.com/mcconnellj/k3s-server/HEAD/applications/{{ .metadata.namespace }}-values.yaml'
-          destination:
-            server: '{{ .spec.destination.server }}'
-            namespace: '{{ .spec.destination.namespace }}'
-          syncPolicy:
-            automated:
-              prune: true
-              selfHeal: true
-            syncOptions:
-              - CreateNamespace=true
-            retry:
-              limit: 2
+  template:
+    metadata:
+      name: '{{ .cluster }}-{{ .metadata.name }}'
+    spec:
+      project: default
+      source:
+        repoURL: '{{ .spec.source.repoURL }}'
+        targetRevision: '{{ .spec.source.targetRevision }}'
+        path: '{{ .spec.source.chart }}'
+        helm:
+          releaseName: '{{ .metadata.name }}'
+          valueFiles:
+            - 'https://raw.githubusercontent.com/mcconnellj/k3s-server/HEAD/applications/{{ .metadata.name }}/values.yaml'
+            - 'https://raw.githubusercontent.com/mcconnellj/k3s-server/HEAD/applications/{{ .metadata.namespace }}-values.yaml'
+      destination:
+        server: '{{ .spec.destination.server }}'
+        namespace: '{{ .spec.destination.namespace }}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+        retry:
+          limit: 2
 
 #keep 
 # valueFiles:
