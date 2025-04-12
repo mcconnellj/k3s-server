@@ -1,0 +1,112 @@
+apiVersion: provisioning.cattle.io/v1
+kind: Cluster
+metadata:
+  name: k3s-development-cluster
+spec:
+  # cloudCredentialSecretName: data:cloud-credential-secret
+  kubernetesVersion: v1.26.7+k3s1
+  defaultPodSecurityAdmissionConfigurationTemplateName: restricted
+  localClusterAuthEndpoint: #keep
+    enabled: true
+  rkeConfig:
+  #bootstrap 2
+    additionalManifest: |-
+      apiVersion: v1
+      kind: Namespace
+      metadata:
+        name: extra-namespace
+    chartValues: #probably not
+      traefik:
+        additionalArguments:
+          - "--log.level=DEBUG"
+      metrics-server:
+        args:
+          - --kubelet-insecure-tls
+    #change
+    machineGlobalConfig:
+      disable-apiserver: false
+      disable-cloud-controller: false
+      disable-controller-manager: false
+      disable-etcd: false
+      disable-kube-proxy: false
+      disable-network-policy: false
+      disable-scheduler: false
+      etcd-expose-metrics: true #keep
+      secrets-encryption: true #keep
+      kube-apiserver-arg: #keep
+        - audit-policy-file=/etc/rancher/k3s/user-audit-policy.yaml
+        - audit-log-path=/etc/rancher/k3s/user-audit.logs
+      tls-san: #keep
+        - "api.example.com"
+      #keep
+      flannel-conf: |
+        Network: 10.42.0.0/16 
+      #change
+      private-registry: |
+        mirrors:
+          docker.io:
+            endpoint:
+              - "http://mycustomreg.com:5000"
+        configs:
+          "mycustomreg.com:5000":
+            auth:
+              username: myuser
+              password: mypass
+    machinePools: #change to k3s and setup cloud? harbor here?
+      - name: pool1
+        quantity: 1
+        controlPlaneRole: true
+        etcdRole: true
+        workerRole: true
+        machineConfigRef: #provisioning
+          kind: Amazonec2Config
+          name: nc-test-pool1-pwl5h
+        unhealthyNodeTimeout: 5m
+        drainBeforeDelete: true
+        nodeLabels:
+          environment: production
+        taints:
+          - key: "critical"
+            value: "true"
+            effect: "NoSchedule"
+    machineSelectorConfig: #keep
+      - config:
+          docker: false
+          selinux: true #keep
+          protect-kernel-defaults: true #keep
+        machineLabelSelector:
+          matchLabels:
+            environment: production
+    machineSelectorFiles: #keep
+      - fileSources:
+          - secret:
+              name: audit-policy
+              items:
+                - key: audit-policy
+                  path: /etc/rancher/k3s/user-audit-policy.yaml
+        machineLabelSelector:
+          matchLabels:
+            rke.cattle.io/control-plane-role: "true"
+    registries: {}
+    network: #keep
+      clusterCIDR: 10.42.0.0/16
+      serviceCIDR: 10.43.0.0/16
+      clusterDNS: 10.43.0.10
+      clusterDomain: cluster.local
+    upgradeStrategy: #keep
+      controlPlaneConcurrency: "1"
+      controlPlaneDrainOptions:
+        enabled: true
+        force: true
+        ignoreDaemonSets: true
+        gracePeriod: 30
+        deleteEmptyDirData: true
+        timeout: 120
+      workerConcurrency: "2"
+      workerDrainOptions:
+        enabled: true
+        force: false
+        ignoreDaemonSets: true
+        gracePeriod: 60
+        deleteEmptyDirData: true
+        timeout: 180
