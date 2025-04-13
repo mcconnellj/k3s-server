@@ -6,8 +6,9 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "0"
 spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
   generators:
-    - clusters: {}
     - git:
         repoURL: https://github.com/mcconnellj/k3s-server.git
         revision: HEAD
@@ -15,7 +16,7 @@ spec:
           - path: 'applications/**-config.yaml'
   template:
     metadata:
-      name: '{{ .cluster }}-{{ .metadata.name }}'
+      name: '{{ .metadata.name }}'
     spec:
       project: default
       source:
