@@ -28,7 +28,7 @@ spec:
             - 'https://raw.githubusercontent.com/mcconnellj/k3s-server/HEAD/applications/{{ .metadata.name }}/values.yaml'
             - 'https://raw.githubusercontent.com/mcconnellj/k3s-server/HEAD/applications/{{ .metadata.namespace }}-values.yaml'
       destination:
-        server: '{{ .spec.destination.server }}'
+        server: https://kubernetes.default.svc
         namespace: '{{ .spec.destination.namespace }}'
       syncPolicy:
         automated:
