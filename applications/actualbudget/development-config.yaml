@@ -1,0 +1,13 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: actualbudget-development
+  namespace: data
+spec:
+  source:
+    repoURL: https://community-charts.github.io/helm-charts
+    chart: actualbudget
+    targetRevision: 1.4.3
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: data

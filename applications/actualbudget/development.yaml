@@ -1,6 +1,0 @@
-app-name: actualbudget  
-app-environment: development  
-app-chart: community-charts/actualbudget  
-app-repoUrl: https://community-charts.github.io/helm-charts  
-app-version: 1.4.2  
-namespace: tenant  
