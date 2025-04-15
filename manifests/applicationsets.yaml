@@ -26,8 +26,8 @@ spec:
         helm:
           releaseName: '{{ .metadata.name }}'
           valueFiles:
-            - 'https://raw.githubusercontent.com/mcconnellj/k3s-server/development/applications/{{ .metadata.name }}/values.yaml'
-            - 'https://raw.githubusercontent.com/mcconnellj/k3s-server/development/applications/{{ .metadata.name }}/development.yaml'
+          - values.yaml
+          - development.yaml
       destination:
         server: https://kubernetes.default.svc
         namespace: '{{ .spec.destination.namespace }}'
