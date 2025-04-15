@@ -11,7 +11,7 @@ spec:
   generators:
     - git:
         repoURL: https://github.com/mcconnellj/k3s-server.git
-        revision: HEAD
+        revision: development
         files:
           - path: 'applications/*/application.yaml'
   template:
