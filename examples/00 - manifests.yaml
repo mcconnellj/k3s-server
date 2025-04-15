@@ -1,0 +1,13 @@
+appNamespaces:
+  - name: core
+    syncWave: "-10"
+    namespace: core
+  - name: tenant
+    syncWave: "-10"
+    namespace: tenant
+  - name: edge
+    syncWave: "-10"
+    namespace: edge
+  - name: data
+    syncWave: "-10"
+    namespace: data
