@@ -1,6 +1,0 @@
-app-name: argo-cd  
-app-environment: development  
-app-chart: argo/argo-cd  
-app-repoUrl: https://argoproj.github.io/argo-helm  
-app-version: 7.8.23  
-namespace: tenant  

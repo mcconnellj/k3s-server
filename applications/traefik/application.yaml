@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: traefik-development
+  name: traefik
   namespace: edge
 spec:
   source:

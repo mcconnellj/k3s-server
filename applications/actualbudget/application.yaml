@@ -1,13 +1,13 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: vault-development
+  name: actualbudget
   namespace: data
 spec:
   source:
-    repoURL: https://helm.releases.hashicorp.com
-    chart: hashicorp/vault
-    targetRevision: 0.30.0
+    repoURL: https://community-charts.github.io/helm-charts
+    chart: actualbudget
+    targetRevision: 1.4.3
   destination:
     server: https://kubernetes.default.svc
     namespace: data

@@ -1,0 +1,8 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppNamespace
+metadata:
+  name: {{ .Values.namespace }}
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: {{ .Values.namespace }}

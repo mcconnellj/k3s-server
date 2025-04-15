@@ -1,9 +1,0 @@
-namespace:
-  - name: edge
-  - name: tenant
-  - name: data
-project:
-  - name: development
-    namespace: development
-  - name: production
-    namespace: production

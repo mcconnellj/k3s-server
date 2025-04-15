@@ -9,11 +9,12 @@ spec:
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]
   generators:
+    
     - git:
         repoURL: https://github.com/mcconnellj/k3s-server.git
         revision: HEAD
         files:
-          - path: 'applications/**-config.yaml'
+          - path: 'applications/*/-config.yaml'
   template:
     metadata:
       name: '{{ .metadata.name }}'
@@ -27,7 +28,7 @@ spec:
           releaseName: '{{ .metadata.name }}'
           valueFiles:
             - 'https://raw.githubusercontent.com/mcconnellj/k3s-server/HEAD/applications/{{ .metadata.name }}/values.yaml'
-            - 'https://raw.githubusercontent.com/mcconnellj/k3s-server/HEAD/applications/{{ .metadata.namespace }}-values.yaml'
+            - 'https://raw.githubusercontent.com/mcconnellj/k3s-server/HEAD/applications/{{ .metadata.namespace }}.yaml'
       destination:
         server: https://kubernetes.default.svc
         namespace: '{{ .spec.destination.namespace }}'
