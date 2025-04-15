@@ -11,3 +11,7 @@ spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: data
+  helm:
+    valueFiles:
+      - 'https://raw.githubusercontent.com/mcconnellj/k3s-server/development/applications/actualbudget/values.yaml'
+      - 'https://raw.githubusercontent.com/mcconnellj/k3s-server/development/applications/actualbudget/development.yaml'
