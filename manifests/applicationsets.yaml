@@ -20,9 +20,9 @@ spec:
     spec:
       project: default
       source:
+        chart: '{{ .spec.source.chart }}'
         repoURL: '{{ .spec.source.repoURL }}'
         targetRevision: '{{ .spec.source.targetRevision }}'
-        path: '{{ .spec.source.chart }}'
         helm:
           releaseName: '{{ .metadata.name }}'
       destination:
