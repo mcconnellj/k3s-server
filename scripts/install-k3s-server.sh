@@ -19,6 +19,10 @@ mv ./k3s-server-main/configs/k3s/* /etc/rancher/k3s/
 # Install K3s
 curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="server" sh -s
 
+# Setup Kube Config
+mkdir -p ~/.kube
+sudo cp /etc/rancher/k3s/k3s.yaml ~/.kube/config
+
 # Install K9s
 curl -L -o k9s_linux_amd64.deb https://github.com/derailed/k9s/releases/download/v0.32.5/k9s_linux_amd64.deb
 sudo apt install ./k9s_linux_amd64.deb
