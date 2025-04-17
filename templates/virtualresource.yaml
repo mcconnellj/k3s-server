@@ -1,0 +1,30 @@
+{{- range .Values.istio.services }}
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  name: {{ .name }}
+spec:
+  hosts:
+    - {{ .gatewayHost }}
+  gateways:
+    - {{ $.Values.istio.gateway.name }}
+  http:
+    {{- range $i, $subset := .routing.subsets }}
+    {{- if $subset.match }}
+    - match:
+        - headers:
+            end-user:
+              exact: {{ $subset.match.headers.end-user.exact }}
+      route:
+        - destination:
+            host: {{ $.Values.istio.gateway.name }}
+            subset: {{ $subset.name }}
+    {{- end }}
+    {{- end }}
+    # Default route
+    - route:
+        - destination:
+            host: {{ $.Values.istio.gateway.name }}
+            subset: {{ .routing.defaultSubset }}
+---
+{{- end }}
