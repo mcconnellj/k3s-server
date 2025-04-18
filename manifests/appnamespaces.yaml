@@ -3,6 +3,8 @@ kind: AppNamespace
 metadata:
   name: core
   annotations:
+    istio-injection: enabled
+    monitoring: prometheus
     argocd.argoproj.io/sync-wave: "-10"
 spec:
   destination:
@@ -14,6 +16,8 @@ kind: AppNamespace
 metadata:
   name: tenant
   annotations:
+    istio-injection: enabled
+    monitoring: prometheus
     argocd.argoproj.io/sync-wave: "-10"
 spec:
   destination:
@@ -25,6 +29,8 @@ kind: AppNamespace
 metadata:
   name: edge
   annotations:
+    istio-injection: enabled
+    monitoring: prometheus
     argocd.argoproj.io/sync-wave: "-10"
 spec:
   destination:
@@ -36,6 +42,8 @@ kind: AppNamespace
 metadata:
   name: data
   annotations:
+    istio-injection: enabled
+    monitoring: prometheus
     argocd.argoproj.io/sync-wave: "-10"
 spec:
   destination:
