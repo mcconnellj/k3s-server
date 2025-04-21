@@ -27,3 +27,6 @@ sudo cp /etc/rancher/k3s/k3s.yaml ~/.kube/config
 curl -L -o k9s_linux_amd64.deb https://github.com/derailed/k9s/releases/download/v0.32.5/k9s_linux_amd64.deb
 sudo apt install ./k9s_linux_amd64.deb
 rm k9s_linux_amd64.deb
+
+#kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj-labs/applicationset/master/manifests/install.yaml
+#kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml

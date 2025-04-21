@@ -25,9 +25,6 @@ spec:
         chart: '{{ .spec.source.chart }}'
         helm:
           releaseName: '{{ .metadata.name }}'
-          valueFiles: 
-          - values.yaml
-          - development.yaml
       destination:
         server: https://kubernetes.default.svc
         namespace: '{{ .spec.destination.namespace }}'
