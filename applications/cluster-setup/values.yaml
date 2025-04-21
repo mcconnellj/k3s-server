@@ -1,0 +1,5 @@
+apps:
+  - name: data
+  - name: core
+  - name: tenant
+  - name: edge

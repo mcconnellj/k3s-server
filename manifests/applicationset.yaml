@@ -20,11 +20,16 @@ spec:
     spec:
       project: default
       source:
-        chart: '{{ .spec.source.chart }}'
         repoURL: '{{ .spec.source.repoURL }}'
         targetRevision: '{{ .spec.source.targetRevision }}'
+        chart: '{{ .spec.source.chart }}'
+        {{- if .spec.source.chart }}
+        chart: '{{ .spec.source.chart }}'
         helm:
           releaseName: '{{ .metadata.name }}'
+        {{- else }}
+        path: '{{ .spec.source.path }}'
+        {{- end }}
       destination:
         server: https://kubernetes.default.svc
         namespace: '{{ .spec.destination.namespace }}'

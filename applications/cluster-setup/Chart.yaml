@@ -1,0 +1,22 @@
+# templates/all-in-one.yaml
+{{- range .Values.apps }}
+# Namespace for {{ .name }}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ .name }}
+---
+# AppProject for {{ .name }}
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: {{ .name }}-project
+  namespace: argocd
+spec:
+  destinations:
+    - namespace: {{ .name }}
+      server: https://kubernetes.default.svc
+  sourceRepos:
+    - '*'
+---
+{{- end }}

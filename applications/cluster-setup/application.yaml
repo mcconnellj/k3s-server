@@ -1,0 +1,42 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cluster-setup
+  namespace: core
+spec:
+  source:
+    repoURL: https://github.com/mcconnellj/k3s-server
+    path: applications/cluster-setup/
+    targetRevision: development
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: core
+  helm:
+    valueFiles:
+      - 'https://raw.githubusercontent.com/mcconnellj/k3s-server/development/applications/cluster-setup/values.yaml'
+      - 'https://raw.githubusercontent.com/mcconnellj/k3s-server/development/applications/actualbudget/development.yaml'
+
+
+
+
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/mcconnellj/k3s-server
+    path: applicatio
+    targetRevision: main
+    helm:
+      valueFiles:
+        - values.yaml
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
