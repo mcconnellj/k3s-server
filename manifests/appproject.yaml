@@ -81,27 +81,3 @@ spec:
       description: Admin for edge project
       policies:
         - p, proj:edge:admin, applications, *, edge/*, allow
----
-apiVersion: argoproj.io/v1alpha1
-kind: AppProject
-metadata:
-  name: tenant-alpha
-  namespace: argocd
-  labels:
-    argocd.argoproj.io/sync-wave: "-1"
-spec:
-  description: Isolated tenant environment for Alpha client
-  sourceRepos:
-    - https://git.example.com/tenants/alpha
-  destinations:
-    - namespace: tenant-alpha
-      server: https://kubernetes.default.svc
-  clusterResourceWhitelist: []
-  namespaceResourceWhitelist:
-    - group: '*'
-      kind: '*'
-  roles:
-    - name: tenant-admin
-      description: Admin for tenant-alpha project
-      policies:
-        - p, proj:tenant-alpha:tenant-admin, applications, *, tenant-alpha/*, allow
