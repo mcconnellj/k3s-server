@@ -22,13 +22,12 @@ spec:
       source:
         repoURL: '{{ .spec.source.repoURL }}'
         targetRevision: '{{ .spec.source.targetRevision }}'
-        {{- if .spec.source.chart }}
         chart: '{{ .spec.source.chart }}'
         helm:
           releaseName: '{{ .metadata.name }}'
-        {{- else }}
-        path: '{{ .spec.source.path }}'
-        {{- end }}
+          valueFiles: 
+          - values.yaml
+          - development.yaml
       destination:
         server: https://kubernetes.default.svc
         namespace: '{{ .spec.destination.namespace }}'
