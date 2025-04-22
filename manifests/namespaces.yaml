@@ -1,5 +1,5 @@
 apiVersion: argoproj.io/v1alpha1
-kind: AppNamespace
+kind: Namespace
 metadata:
   name: core
   annotations:
@@ -12,7 +12,7 @@ spec:
     namespace: core
 ---
 apiVersion: argoproj.io/v1alpha1
-kind: AppNamespace
+kind: Namespace
 metadata:
   name: tenant
   annotations:
@@ -25,7 +25,7 @@ spec:
     namespace: tenant
 ---
 apiVersion: argoproj.io/v1alpha1
-kind: AppNamespace
+kind: Namespace
 metadata:
   name: edge
   annotations:
@@ -38,7 +38,7 @@ spec:
     namespace: edge
 ---
 apiVersion: argoproj.io/v1alpha1
-kind: AppNamespace
+kind: Namespace
 metadata:
   name: data
   annotations:
