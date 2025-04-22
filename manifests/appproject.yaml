@@ -85,7 +85,7 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: edge
+  name: tenant
   namespace: argocd
   labels:
     argocd.argoproj.io/sync-wave: "0"
