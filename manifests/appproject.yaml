@@ -4,7 +4,7 @@ metadata:
   name: data
   namespace: argocd
   labels:
-    argocd.argoproj.io/sync-wave: "-1"
+    argocd.argoproj.io/sync-wave: "0"
 spec:
   description: Data storage and services (databases, caches)
   sourceRepos:
@@ -30,7 +30,7 @@ metadata:
   name: core
   namespace: argocd
   labels:
-    argocd.argoproj.io/sync-wave: "-1"
+    argocd.argoproj.io/sync-wave: "0"
 spec:
   description: Core platform services (auth, secrets, logging)
   sourceRepos:
@@ -58,7 +58,7 @@ metadata:
   name: edge
   namespace: argocd
   labels:
-    argocd.argoproj.io/sync-wave: "-1"
+    argocd.argoproj.io/sync-wave: "0"
 spec:
   description: Ingress, proxies (e.g., Cilium), and routing components
   sourceRepos:
@@ -81,3 +81,33 @@ spec:
       description: Admin for edge project
       policies:
         - p, proj:edge:admin, applications, *, edge/*, allow
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: edge
+  namespace: argocd
+  labels:
+    argocd.argoproj.io/sync-wave: "0"
+spec:
+  description: Ingress, proxies (e.g., Cilium), and routing components
+  sourceRepos:
+    - https://git.example.com/edge/*
+  destinations:
+    - namespace: tenant
+      server: https://kubernetes.default.svc
+  clusterResourceWhitelist:
+    - group: 'cilium.io'
+      kind: 'CiliumNetworkPolicy'
+    - group: 'gateway.networking.k8s.io'
+      kind: 'Gateway'
+    - group: 'external-secrets.io'
+      kind: 'ClusterSecretStore'
+  namespaceResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  roles:
+    - name: admin
+      description: Admin for edge project
+      policies:
+        - p, proj:edge:admin, applications, *, tenant/*, allow
