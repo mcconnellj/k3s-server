@@ -1,0 +1,10 @@
+write-kubeconfig-mode: "0644"
+write-kubeconfig: "/etc/rancher/k3s/k3s.yaml"
+cluster-name: "cloud-development"
+flannel-backend: "none"
+disable-kube-proxy: true
+disable-network-policy: true
+cluster-init: true
+disable:
+  - servicelb
+  - traefik
