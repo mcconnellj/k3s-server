@@ -6,7 +6,6 @@ metadata:
   labels:
     name: argocd
   annotations:
-    istio-injection: enabled
     monitoring: prometheus
     argocd.argoproj.io/sync-wave: "-10"
 ---

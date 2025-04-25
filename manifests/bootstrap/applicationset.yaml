@@ -36,8 +36,3 @@ spec:
           - CreateNamespace=true
         retry:
           limit: 2
-
-#keep 
-# valueFiles:
-#   - "https://raw.githubusercontent.com/mcconnellj/k3s-server/HEAD/applications/{{ .appName }}/values.yaml"
-#   - "https://raw.githubusercontent.com/mcconnellj/k3s-server/HEAD/applications/{{ .appEnvironment }}-values.yaml"
