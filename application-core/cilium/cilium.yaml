@@ -1,0 +1,15 @@
+apiVersion: helm.cattle.io/v2
+kind: HelmChart
+metadata:
+  name: cilium
+  namespace: kube-system
+  annotations:
+    argocd.argoproj.io/sync-wave: "-5"
+spec:
+  repo: https://helm.cilium.io/
+  chart: cilium
+  targetNamespace: kube-system
+  version: 1.18.0-pre.0
+  valuesFiles:
+    - values.yaml
+    - development.yaml

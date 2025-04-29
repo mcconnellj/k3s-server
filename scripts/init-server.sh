@@ -16,22 +16,21 @@ mkdir -p /etc/rancher/k3s/
 mv ./k3s-server-main/manifests/* /var/lib/rancher/k3s/server/manifests/
 mv ./k3s-server-main/configs/k3s/* /etc/rancher/k3s/
 
-# Install K3s
-curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="server" sh -s
-
 # Get the current machines ip
 export SETUP_NODEIP=$(ip -4 addr show ens18 | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
 
 # Install K3s with the configuration file.
 curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION="v1.32.2+k3s1" \
-  INSTALL_K3S_EXEC="--node-ip \$SETUP_NODEIP" \
-  K3S_TOKEN=\$SETUP_CLUSTERTOKEN \
+  INSTALL_K3S_EXEC="--node-ip $SETUP_NODEIP" \
+  K3S_TOKEN=$SETUP_CLUSTERTOKEN \
   K3S_CONFIG_FILE=./config.yaml \
   sh -s -
 
 # Setup Kube Config
-mkdir -p $HOME/.kube && sudo cp -i /etc/rancher/k3s/k3s.yaml $HOME/.kube/config
-sudo chown $(id -u):$(id -g) $HOME/.kube/config && chmod 600 $HOME/.kube/config
+mkdir -p $HOME/.kube
+sudo cp -i /etc/rancher/k3s/k3s.yaml $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+chmod 600 $HOME/.kube/config
 
 # Helm install Cilium
 helm repo add cilium https://helm.cilium.io
