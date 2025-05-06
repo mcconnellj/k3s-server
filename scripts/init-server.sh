@@ -20,10 +20,8 @@ mv ./k3s-server-main/configs/k3s/* /etc/rancher/k3s/
 export SETUP_NODEIP=$(ip -4 addr show ens18 | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
 
 # Install K3s with the configuration file.
-curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION="v1.32.2+k3s1" \
-  INSTALL_K3S_EXEC="--node-ip=192.168.0.47 --advertise-address=192.168.0.47 --tls-san 192.168.0.47" \
-  K3S_TOKEN=$SETUP_CLUSTERTOKEN \
-  K3S_CONFIG_FILE=./config.yaml \
+curl -sfL https://get.k3s.io | K3S_TOKEN=$SETUP_CLUSTERTOKEN \
+  K3S_CONFIG_FILE=./config/cloud-development.yaml \
   sh -s -
 
 # Setup Kube Config

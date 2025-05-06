@@ -1,4 +1,4 @@
-apiVersion: helm.cattle.io/v2
+apiVersion: helm.cattle.io/v1
 kind: HelmChart
 metadata:
   name: cilium
@@ -10,6 +10,3 @@ spec:
   chart: cilium
   targetNamespace: kube-system
   version: 1.18.0-pre.0
-  valuesFiles:
-    - values.yaml
-    - development.yaml
