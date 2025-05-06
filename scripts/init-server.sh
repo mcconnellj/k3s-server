@@ -11,12 +11,21 @@ curl -L -o k3s-server.zip "https://github.com/mcconnellj/k3s-server/archive/refs
 python3 -m zipfile -e k3s-server.zip .
 rm k3s-server.zip
 
+# Get the current machine's IP
+export NODE_IP=$(ip -4 addr show ens18 | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
+
+# Create or update the K3s config file dynamically
+cat <<EOF > ./k3s-server-development/configs/cloud-development.yaml
+node-ip: ${NODE_IP}
+advertise-address: ${NODE_IP}
+tls-san:
+  - ${NODE_IP}
+EOF
+
 mkdir -p /var/lib/rancher/k3s/server/manifests/
 mkdir -p /etc/rancher/k3s/
 mv ./k3s-server-development/manifests/k3s-init/* /var/lib/rancher/k3s/server/manifests/
 
-# Get the current machines ip
-export SETUP_NODEIP=$(ip -4 addr show ens18 | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
 
 # Install K3s with the configuration file.
 curl -sfL https://get.k3s.io | K3S_TOKEN=$SETUP_CLUSTERTOKEN \
