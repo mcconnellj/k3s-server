@@ -7,21 +7,20 @@ apt update
 apt upgrade -y
 
 # Download k3s manifests
-curl -L -o k3s-server.zip "https://github.com/mcconnellj/k3s-server/archive/refs/heads/main.zip?nocache=$(date +%s)"
+curl -L -o k3s-server.zip "https://github.com/mcconnellj/k3s-server/archive/refs/heads/development.zip?nocache=$(date +%s)"
 python3 -m zipfile -e k3s-server.zip .
 rm k3s-server.zip
 
 mkdir -p /var/lib/rancher/k3s/server/manifests/
 mkdir -p /etc/rancher/k3s/
-mv ./k3s-server-main/manifests/* /var/lib/rancher/k3s/server/manifests/
-mv ./k3s-server-main/configs/k3s/* /etc/rancher/k3s/
+mv ./k3s-server-development/manifests/k3s-init/* /var/lib/rancher/k3s/server/manifests/
 
 # Get the current machines ip
 export SETUP_NODEIP=$(ip -4 addr show ens18 | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
 
 # Install K3s with the configuration file.
 curl -sfL https://get.k3s.io | K3S_TOKEN=$SETUP_CLUSTERTOKEN \
-  K3S_CONFIG_FILE=./config/cloud-development.yaml \
+  K3S_CONFIG_FILE=./k3s-server-development/configs/cloud-development.yaml \
   sh -s -
 
 # Setup Kube Config
@@ -34,8 +33,8 @@ chmod 600 $HOME/.kube/config
 helm repo add cilium https://helm.cilium.io
 helm repo update
 helm install cilium cilium/cilium -n kube-system \
-  -f applications/cilium/values.yaml \
-  -f applications/cilium/development.yaml \
+  -f applications-core/cilium/values.yaml \
+  -f applications-core/cilium/development.yaml \
   --version 1.17.0-rc.2 \
   --set operator.replicas=1
 
