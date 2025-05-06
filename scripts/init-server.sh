@@ -24,10 +24,9 @@ curl -sfL https://get.k3s.io | K3S_TOKEN=$SETUP_CLUSTERTOKEN \
   sh -s -
 
 # Setup Kube Config
-mkdir -p $HOME/.kube
-sudo cp -i /etc/rancher/k3s/k3s.yaml $HOME/.kube/config
-sudo chown $(id -u):$(id -g) $HOME/.kube/config
-chmod 600 $HOME/.kube/config
+sudo chmod 600 /etc/rancher/k3s/k3s.yaml
+echo "export KUBECONFIG=/etc/rancher/k3s/k3s.yaml" >> $HOME/.bashrc
+source $HOME/.bashrc
 
 # Helm install Cilium
 helm repo add cilium https://helm.cilium.io
