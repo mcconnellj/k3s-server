@@ -12,7 +12,7 @@ python3 -m zipfile -e k3s-server.zip .
 rm k3s-server.zip
 
 # Get the current machine's IP
-export NODE_IP=$(ip -4 addr show ens18 | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
+export NODE_IP=$(hostname -I | awk '{print $1}')
 
 # Create or update the K3s config file dynamically
 cat <<EOF > ./k3s-server-development/configs/cloud-development.yaml
