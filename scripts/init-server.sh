@@ -26,7 +26,6 @@ mkdir -p /var/lib/rancher/k3s/server/manifests/
 mkdir -p /etc/rancher/k3s/
 mv ./k3s-server-development/manifests/k3s-init/* /var/lib/rancher/k3s/server/manifests/
 
-
 # Install K3s with the configuration file.
 curl -sfL https://get.k3s.io | K3S_TOKEN=$SETUP_CLUSTERTOKEN \
   K3S_CONFIG_FILE=./k3s-server-development/configs/cloud-development.yaml \
