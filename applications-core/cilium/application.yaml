@@ -2,7 +2,6 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: cilium
-  namespace: argocd  # or your desired ArgoCD namespace
 spec:
   source:
     repoURL: https://helm.cilium.io/
