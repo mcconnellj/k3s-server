@@ -7,7 +7,7 @@ apt update
 apt upgrade -y
 
 # Download k3s manifests
-curl -L -o k3s-server.zip "https://github.com/mcconnellj/k3s-server/archive/refs/heads/main.zip?nocache=$(date +%s)"
+curl -L -o k3s-server.zip "https://github.com/mcconnellj/k3s-server/archive/refs/heads/development.zip?nocache=$(date +%s)"
 python3 -m zipfile -e k3s-server.zip .
 rm k3s-server.zip
 
