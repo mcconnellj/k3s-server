@@ -30,5 +30,5 @@ gcloud compute instances create $INSTANCE_NAME \
     --shielded-integrity-monitoring \
     --labels=goog-ec-src=vm_add-gcloud \
     --reservation-affinity=any \
-    --metadata=startup-script-url=https://raw.githubusercontent.com/mcconnellj/k3s-server/main/scripts/install-k3s-server.sh?nocache=$(date +%s)
+    --metadata=startup-script-url=https://raw.githubusercontent.com/mcconnellj/k3s-server/development/scripts/install-k3s-server.sh?nocache=$(date +%s)
 
